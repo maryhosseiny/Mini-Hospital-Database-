@@ -11,10 +11,14 @@ public class ToDoList {
     private final List<Task> taskSet;
 
     public ToDoList() {
+
         taskSet = new ArrayList<>();
     }
 
+    public List<Task> getTasks() {
 
+        return taskSet;
+    }
 
     // EFFECTS: returns the number of completed tasks in a list of tasks
     //          if no tasks are completed it will return 0
@@ -50,8 +54,8 @@ public class ToDoList {
     }
 
     // MODIFIES: this
-    // EFFECTS: removes a task is in the task set and returns true, unless
-    //          the task is not in the set, then it will return false
+    // EFFECTS: removes a task is in the task set, unless
+    //          the task is not in the set, then it will do nothing
     public void remove(Task task) {
         taskSet.remove(task);
     }

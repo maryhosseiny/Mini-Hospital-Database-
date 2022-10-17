@@ -14,7 +14,7 @@ public class Task {
     private boolean status;    // the completion status of a task
                                // (true is completed and false is incomplete)
     private String title;      // the name of a task
-    private String date;      // the due date for a task
+    private String date;       // the due date for a task
     private TaskType type;     // the task type
 
     // REQUIRES: title has a non-zero length
@@ -32,7 +32,7 @@ public class Task {
 
     //MODIFIES: this
     //EFFECTS: changes the status of a task
-    //    - if complete, the status is true
+    //    - if complete, then status is true
     //    - if not complete, the status is false
     public void updateStatus(boolean newStatus) {
         this.status = newStatus;

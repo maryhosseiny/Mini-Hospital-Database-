@@ -26,10 +26,9 @@ of interest of mine.
 The *user stories* describe how someone can use the application to produce a 
 specific outcome.
 - As a user, I want to view the number of tasks I have completed in total
-and the number of tasks I have remaining 
+
 - As a user, I want to be able to add a task to my list
 - As a user, I want to remove a task from my list once I have finished it
-- As a user, I want to have the ability to change the status of a task
-in case I make a mistake and updating it to complete when the task is not done
+- As a user, I want to see the number of incomplete tasks in total
 - As a user, I want to see all the tasks on my list
  
