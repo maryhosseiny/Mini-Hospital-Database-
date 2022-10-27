@@ -1,0 +1,265 @@
+package ui;
+
+import model.*;
+
+import java.util.Scanner;
+
+public class HospitalApp {
+    private Hospital hospital;
+    private Scanner input;
+    private Physician physicianOne = new Physician(1234, "Danny");
+    private Physician physicianTwo = new Physician(4567, "Tana");
+    private Physician physicianThree = new Physician(7890, "Sara");
+    private Physician physicianFour = new Physician(1212, "Peppa");
+    private Patient patientOne = new Patient("Ella", 20, 234111, 1);
+    private Patient patientTwo = new Patient("Bam", 45, 111999, 2);
+    private Patient patientThree = new Patient("Sam", 36, 818181, 3);
+    private Nurse nurseOne = new Nurse(4444, "Lena");
+    private Nurse nurseTwo = new Nurse(3333, "Maya");
+    private Nurse nurseThree = new Nurse(3333, "Maya");
+    private Medication medicationOne = new Medication("Acetaminophen", 123456, "Kirkland");
+    private Medication medicationTwo = new Medication("Amoxicillin", 123678, "Trimox");
+    private Medication medicationThree = new Medication("Levothyroxine", 456789, "Synthyroid");
+    private static int max = 100;
+    private static int min = 4;
+
+
+    // EFFECTS: runs the teller application
+    public HospitalApp() {
+        runHospital();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes user input
+    private void runHospital() {
+        boolean keepGoing = true;
+        String command = null;
+
+        init();
+        displayMenu();
+        while (keepGoing) {
+
+            command = input.next();
+            command = command.toLowerCase();
+
+            if (command.equals("quit")) {
+                keepGoing = false;
+            } else {
+                processCommand(command);
+            }
+        }
+
+        System.out.println("\nThank you for visiting the hospital data base!");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes accounts
+    private void init() {
+        hospital = new Hospital();
+        hospital.addPatient(patientOne);
+        hospital.addPatient(patientTwo);
+        hospital.addPatient(patientThree);
+        hospital.addNurse(nurseOne);
+        hospital.addNurse(nurseTwo);
+        hospital.addNurse(nurseThree);
+        hospital.addMedication(medicationOne);
+        hospital.addMedication(medicationTwo);
+        hospital.addMedication(medicationThree);
+        hospital.addPhysician(physicianOne);
+        hospital.addPhysician(physicianTwo);
+        hospital.addPhysician(physicianThree);
+        hospital.addPhysician(physicianFour);
+        patientOne.patientDischarged();
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes user command
+    @SuppressWarnings("checkstyle:MethodLength")
+    private void processCommand(String command) {
+        if (command.equals("staff")) {
+            displayMenuStaff();
+        } else if (command.equals("patient")) {
+            displayMenuPatient();
+        } else if (command.equals("physicians")) {
+            viewPhysicians();
+        } else if (command.equals("nurses")) {
+            viewNurses();
+        } else if (command.equals("medication")) {
+            displayMenuMedication();
+        } else if (command.equals("medications")) {
+            viewMedication();
+        } else if (command.equals("add med")) {
+            addMedication();
+        } else if (command.equals("remove med")) {
+            removeMedication();
+        } else if (command.equals("patients")) {
+            viewPatients();
+        } else if (command.equals("discharged")) {
+            viewDischarged();
+        } else if (command.equals("add")) {
+            addPatient();
+        } else if (command.equals("remove")) {
+            removePatient();
+        } else if (command.equals("return")) {
+            displayMenu();
+        } else {
+            System.out.println("Selection not valid...");
+        }
+    }
+
+    // EFFECTS: displays menu of options to user
+    private void displayMenu() {
+        System.out.println("\nWelcome to the Student Hospital Database.");
+        System.out.println("You can select the following options to explore the database further.");
+        System.out.println("Remember to enter 'return' if you would like to return to the main menu. Enjoy!");
+        System.out.println("\nSelect from:");
+        System.out.println("\tstaff -> staff database");
+        System.out.println("\tpatient -> patient database");
+        System.out.println("\tmedication -> medication database");
+        System.out.println("\tquit -> to quit");
+
+    }
+
+    // EFFECTS: displays menu of options to user
+    private void displayMenuStaff() {
+        System.out.println("\nSelect from:");
+        System.out.println("\tphysicians -> view physicians");
+        System.out.println("\tnurses -> view nurses");
+        System.out.println("\treturn -> to return back to original menu");
+        System.out.println("\tquit -> to quit the program");
+    }
+
+    // EFFECTS: displays menu of options to user
+    private void displayMenuMedication() {
+        System.out.println("\nSelect from:");
+        System.out.println("\tmedications -> view medications");
+        System.out.println("\tadd med -> to add a new medication to the data base");
+        System.out.println("\tremove med -> to remove a medication from the database");
+        System.out.println("\treturn -> to return back to original menu");
+        System.out.println("\tquit -> to quit the program");
+    }
+
+    // EFFECTS: displays menu of options to user
+    private void displayMenuPatient() {
+        System.out.println("\nSelect from:");
+        System.out.println("\tpatients -> view all patients");
+        System.out.println("\tdischarged -> view discharged patients");
+        System.out.println("\tadd -> to add a new patient to the database");
+        System.out.println("\tremove -> to remove a patient from the database");
+        System.out.println("\treturn -> to return back to original menu");
+        System.out.println("\tquit -> to quit the program");
+    }
+
+    public void addPatient() {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Please enter the patient's name, age, and Personal Health Number.");
+        String name = userInput.nextLine();
+        int roomNum = (int)(Math.random() * (max - min));
+        int age = userInput.nextInt();
+        int phn = userInput.nextInt();
+        Patient newPatient = new Patient(name, age, phn, roomNum);
+        hospital.addPatient(newPatient);
+        System.out.println("The patient is now added to our system. Please press 'return' to go back to the main menu");
+    }
+
+    public void removePatient() {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Here is a list of all patients available in the database.");
+        viewPatients();
+        System.out.println("Please enter the patient's name, age, PHN and room number to be removed.");
+        String name = userInput.nextLine();
+        int age = userInput.nextInt();
+        int phn = userInput.nextInt();
+        int roomNum = userInput.nextInt();
+        Patient newPatient = new Patient(name, age, phn, roomNum);
+        hospital.removePatient(newPatient);
+        System.out.println("The patient is now added to our system. Please press 'return' to go back to the main menu");
+    }
+
+    public void addMedication() {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Please enter the medication's name, serial number, and brand.");
+        String name = userInput.nextLine();
+        int serialNum = userInput.nextInt();
+        String brand = userInput.nextLine();
+        Medication newMed = new Medication(name, serialNum, brand);
+        hospital.addMedication(newMed);
+        System.out.println("The medication is now added. Please press 'return' to go back to the main menu");
+    }
+
+    public void removeMedication() {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Here is a list of all medications available in the database.");
+        viewMedication();
+        System.out.println("Please enter the medication's name, serial number, and brand to be removed.");
+        String name = userInput.nextLine();
+        int serialNum = userInput.nextInt();
+        String brand = userInput.nextLine();
+        Medication newMed = new Medication(name, serialNum, brand);
+        hospital.removeMedication(newMed);
+        System.out.println("The medication is now removed. Please press 'return' to go back to the main menu");
+    }
+
+    public String retrievePhysicians() {
+        String listPhysicians = "";
+        for (Physician p: hospital.getPhysicians()) {
+            listPhysicians += "{" + p.getEmployeeName() + ", " + p.getEmployeeId() +  "}" + " ";
+        }
+        return listPhysicians;
+    }
+
+    private void viewPhysicians() {
+        System.out.println("All the current physicians and their employee ID include: " + retrievePhysicians());
+    }
+
+    public String retrievePatients() {
+        String listPatients = "";
+        for (Patient p: hospital.getPatients()) {
+            listPatients += "{" + p.getName() + "," + p.getAge() + "," + p.getPHN() + "," + p.getRoom() + "}" + " ";
+        }
+        return listPatients;
+    }
+
+    private void viewPatients() {
+        System.out.println("All the recorded patients and along with their PHN include: " + retrievePatients());
+    }
+
+    public String retrieveNurses() {
+        String listNurses = "";
+        for (Nurse n: hospital.getNurses()) {
+            listNurses += "{" + n.getEmployeeName() + "," + n.getEmployeeId() + "}" + " ";
+        }
+        return listNurses;
+    }
+
+    private void viewNurses() {
+        System.out.println("All the current nurses and their employee ids include: " + retrieveNurses());
+    }
+
+    public String retrieveMedication() {
+        String listMedicationName = "";
+        for (Medication m: hospital.getMedication()) {
+            listMedicationName += "{" + m.getName() + "," + m.getSerialNumber() + "," + m.getBrand() + "}" + " ";
+        }
+        return listMedicationName;
+    }
+
+    private void viewMedication() {
+        System.out.println("All the current medication and their serial number include: " + retrieveMedication());
+    }
+
+    public String retrieveDischarged() {
+        String listDischarged = "";
+        for (Patient p: hospital.getDischargedPatients()) {
+            listDischarged += "{" + p.getName() + "," + p.getAge() + "," + p.getPHN() + "," + p.getRoom() + "}" + " ";
+        }
+        return listDischarged;
+    }
+
+    private void viewDischarged() {
+        System.out.println("All the currently discharged patients out the hospital include: " + retrieveDischarged());
+    }
+
+}
