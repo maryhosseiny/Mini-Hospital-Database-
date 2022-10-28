@@ -4,6 +4,7 @@ import model.*;
 
 import java.util.Scanner;
 
+// Represents a hospital database application
 public class HospitalApp {
     private Hospital hospital;
     private Scanner input;
@@ -24,13 +25,14 @@ public class HospitalApp {
     private static int min = 4;
 
 
-    // EFFECTS: runs the teller application
+    // EFFECTS: runs the hospital application
     public HospitalApp() {
         runHospital();
     }
 
     // MODIFIES: this
     // EFFECTS: processes user input
+    // taken and modified from the TellerApp code provided in class
     private void runHospital() {
         boolean keepGoing = true;
         String command = null;
@@ -54,6 +56,7 @@ public class HospitalApp {
 
     // MODIFIES: this
     // EFFECTS: initializes accounts
+    // taken and modified from the TellerApp code provided in class
     private void init() {
         hospital = new Hospital();
         hospital.addPatient(patientOne);
@@ -77,6 +80,7 @@ public class HospitalApp {
     // MODIFIES: this
     // EFFECTS: processes user command
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    // taken and modified from the TellerApp code provided in class
     private void processCommand(String command) {
         if (command.equals("staff")) {
             displayMenuStaff();
@@ -122,7 +126,7 @@ public class HospitalApp {
 
     }
 
-    // EFFECTS: displays menu of options to user
+    // EFFECTS: displays staff menu of options to user
     private void displayMenuStaff() {
         System.out.println("\nSelect from:");
         System.out.println("\tphysicians -> view physicians");
@@ -131,7 +135,7 @@ public class HospitalApp {
         System.out.println("\tquit -> to quit the program");
     }
 
-    // EFFECTS: displays menu of options to user
+    // EFFECTS: displays medication menu of options to user
     private void displayMenuMedication() {
         System.out.println("\nSelect from:");
         System.out.println("\tmedications -> view medications");
@@ -141,7 +145,7 @@ public class HospitalApp {
         System.out.println("\tquit -> to quit the program");
     }
 
-    // EFFECTS: displays menu of options to user
+    // EFFECTS: displays patient menu of options to user
     private void displayMenuPatient() {
         System.out.println("\nSelect from:");
         System.out.println("\tpatients -> view all patients");
@@ -152,6 +156,8 @@ public class HospitalApp {
         System.out.println("\tquit -> to quit the program");
     }
 
+    // REQUIRES: the inputted patient must not be in the hospital database
+    // EFFECTS: adds a patient to the hospital patient database
     public void addPatient() {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Please enter the patient's name, age, and Personal Health Number.");
@@ -164,6 +170,8 @@ public class HospitalApp {
         System.out.println("The patient is now added to our system. Please press 'return' to go back to the main menu");
     }
 
+    // REQUIRES: the inputted patient must be in the hospital database
+    // EFFECTS: removes a patient from the hospital patient database
     public void removePatient() {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Here is a list of all patients available in the database.");
@@ -178,6 +186,8 @@ public class HospitalApp {
         System.out.println("The patient is now added to our system. Please press 'return' to go back to the main menu");
     }
 
+    // REQUIRES: the inputted medication must not be in the hospital database
+    // EFFECTS: adds a medication to the hospital medication database
     public void addMedication() {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Please enter the medication's name, serial number, and brand.");
@@ -188,7 +198,9 @@ public class HospitalApp {
         hospital.addMedication(newMed);
         System.out.println("The medication is now added. Please press 'return' to go back to the main menu");
     }
-
+    
+    // REQUIRES: the inputted medication must be in the hospital database
+    // EFFECTS: removes a medication form the hospital medication database
     public void removeMedication() {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Here is a list of all medications available in the database.");
@@ -202,6 +214,8 @@ public class HospitalApp {
         System.out.println("The medication is now removed. Please press 'return' to go back to the main menu");
     }
 
+    // EFFECTS: prints the names and employee IDs of all physicians in the database
+    //          if the list is empty, returns an empty string
     public String retrievePhysicians() {
         String listPhysicians = "";
         for (Physician p: hospital.getPhysicians()) {
@@ -210,10 +224,13 @@ public class HospitalApp {
         return listPhysicians;
     }
 
+    // EFFECTS: prints the names and employee IDs of all physicians as an output
     private void viewPhysicians() {
         System.out.println("All the current physicians and their employee ID include: " + retrievePhysicians());
     }
 
+    // EFFECTS: prints the name, age, PHN and room number of all patients in the database
+    //          if the list is empty, returns an empty string
     public String retrievePatients() {
         String listPatients = "";
         for (Patient p: hospital.getPatients()) {
@@ -222,10 +239,13 @@ public class HospitalApp {
         return listPatients;
     }
 
+    // EFFECTS: prints patient information of all patients in the hospital
     private void viewPatients() {
         System.out.println("All the recorded patients and along with their PHN include: " + retrievePatients());
     }
 
+    // EFFECTS: prints the names and employee IDs of all nurses in the database
+    //          if the list is empty, returns an empty string
     public String retrieveNurses() {
         String listNurses = "";
         for (Nurse n: hospital.getNurses()) {
@@ -234,10 +254,13 @@ public class HospitalApp {
         return listNurses;
     }
 
+    // EFFECTS: prints all nurses information from the database
     private void viewNurses() {
         System.out.println("All the current nurses and their employee ids include: " + retrieveNurses());
     }
 
+    // EFFECTS: prints the names, serial number and brand of all medications in the database
+    //          if the list is empty, returns an empty string
     public String retrieveMedication() {
         String listMedicationName = "";
         for (Medication m: hospital.getMedication()) {
@@ -246,10 +269,13 @@ public class HospitalApp {
         return listMedicationName;
     }
 
+    // EFFECTS: prints all medication information from the database
     private void viewMedication() {
         System.out.println("All the current medication and their serial number include: " + retrieveMedication());
     }
 
+    // EFFECTS: prints the name, age, PHN and room number of all discharged patients in the database
+    //          if the list is empty, returns an empty string
     public String retrieveDischarged() {
         String listDischarged = "";
         for (Patient p: hospital.getDischargedPatients()) {
@@ -258,6 +284,7 @@ public class HospitalApp {
         return listDischarged;
     }
 
+    // EFFECTS: prints patient information of all discharged patients in the hospital
     private void viewDischarged() {
         System.out.println("All the currently discharged patients out the hospital include: " + retrieveDischarged());
     }
