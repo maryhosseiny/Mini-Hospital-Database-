@@ -1,0 +1,88 @@
+{
+    "physicians": [
+        {
+            "employeeName": "Danny",
+            "patientList": [],
+            "employeeID": 1234
+        },
+        {
+            "employeeName": "Tana",
+            "patientList": [],
+            "employeeID": 4567
+        },
+        {
+            "employeeName": "Sara",
+            "patientList": [],
+            "employeeID": 7890
+        },
+        {
+            "employeeName": "Peppa",
+            "patientList": [],
+            "employeeID": 1212
+        }
+    ],
+    "patients": [
+        {
+            "personalHealthNumber": 234111,
+            "roomNum": 1,
+            "dischargeStatus": true,
+            "name": "Ella",
+            "age": 20
+        },
+        {
+            "personalHealthNumber": 111999,
+            "roomNum": 2,
+            "dischargeStatus": false,
+            "name": "Bam",
+            "age": 45
+        },
+        {
+            "personalHealthNumber": 818181,
+            "roomNum": 3,
+            "dischargeStatus": false,
+            "name": "Sam",
+            "age": 36
+        },
+        {
+            "personalHealthNumber": 454647,
+            "roomNum": 30,
+            "dischargeStatus": false,
+            "name": "Simmy",
+            "age": 20
+        }
+    ],
+    "medication": [
+        {
+            "serialNum": 123456,
+            "name": "Acetaminophen",
+            "brand": "Kirkland"
+        },
+        {
+            "serialNum": 123678,
+            "name": "Amoxicillin",
+            "brand": "Trimox"
+        },
+        {
+            "serialNum": 456789,
+            "name": "Levothyroxine",
+            "brand": "Synthyroid"
+        }
+    ],
+    "nurses": [
+        {
+            "employeeName": "Lena",
+            "patientList": [],
+            "employeeID": 4444
+        },
+        {
+            "employeeName": "Maya",
+            "patientList": [],
+            "employeeID": 3333
+        },
+        {
+            "employeeName": "Miya",
+            "patientList": [],
+            "employeeID": 3330
+        }
+    ]
+}

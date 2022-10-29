@@ -27,9 +27,9 @@ public class PhysicianTest {
         testNurseOne = new Nurse( 4444, "Lena");
         testNurseTwo = new Nurse(3333, "Maya");
         testNurseThree = new Nurse(3333, "Maya");
-        testPatientOne = new Patient("Ella", 20, 234111, 1);
-        testPatientTwo = new Patient("Bam", 45, 111999, 2);
-        testPatientThree = new Patient("Sam", 36, 818181, 3);
+        testPatientOne = new Patient("Ella", 20, 234111, true, 1);
+        testPatientTwo = new Patient("Bam", 45, 111999, false, 2);
+        testPatientThree = new Patient("Sam", 36, 818181, true ,3);
     }
 
     @Test

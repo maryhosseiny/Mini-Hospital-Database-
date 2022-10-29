@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.LinkedList;
 
 // Represents a physician with its employee ID, its name and a list of patients assigned
-public class Physician implements HospitalEmployee {
+public class Physician implements HospitalEmployee, Writable {
     private int employeeId;
     private String employeeName;
     private LinkedList<Patient> patientList;
@@ -29,6 +32,16 @@ public class Physician implements HospitalEmployee {
     // EFFECTS: removes the inputted patient from the physician patient list
     public void removePatient(Patient p) {
         patientList.remove(p);
+    }
+
+    // EFFECTS: creates a json object from physician data
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("employeeID", employeeId);
+        json.put("employeeName", employeeName);
+        json.put("patientList", patientList);
+        return json;
     }
 
     // getters

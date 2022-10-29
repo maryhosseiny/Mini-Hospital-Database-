@@ -1,7 +1,10 @@
 package model;
 
-// Represents a medication with it's name, serial number and its brand
-public class Medication {
+import org.json.JSONObject;
+import persistence.Writable;
+
+// Represents a medication with its name, serial number and its brand
+public class Medication implements Writable {
     private String name;
     private int serialNumber;
     private String brand;
@@ -14,6 +17,16 @@ public class Medication {
         this.name = name;
         this.serialNumber = serialNumber;
         this.brand = brand;
+    }
+
+    // EFFECTS: creates a json object from medication data
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("serialNum", serialNumber);
+        json.put("brand", brand);
+        return json;
     }
 
     //getters

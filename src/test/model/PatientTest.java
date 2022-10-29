@@ -32,14 +32,14 @@ public class PatientTest {
         testNurseOne = new Nurse( 4444, "Lena");
         testNurseTwo = new Nurse(3333, "Maya");
         testNurseThree = new Nurse(3333, "Maya");
-        testPatientOne = new Patient("Ella", 20, 234111, 1);
-        testPatientTwo = new Patient("Bam", 45, 111999, 2);
-        testPatientThree = new Patient("Sam", 36, 818181, 3);
+        testPatientOne = new Patient("Ella", 20, 234111, true, 1);
+        testPatientTwo = new Patient("Bam", 45, 111999, false, 2);
+        testPatientThree = new Patient("Sam", 36, 818181, false, 3);
     }
 
     @Test
     public void testConstructor() {
-        assertFalse(testPatientOne.getDischargeStatus());
+        assertTrue(testPatientOne.getStatus());
         assertEquals(testPatientOne.getName(), "Ella");
         assertEquals(testPatientOne.getAge(), 20);
         assertEquals(testPatientOne.getPHN(), 234111);
@@ -50,9 +50,9 @@ public class PatientTest {
 
     @Test
     public void testPatientDischarged() {
-        assertFalse(testPatientOne.getDischargeStatus());
-        testPatientOne.patientDischarged();
-        assertTrue(testPatientOne.getDischargeStatus());
+        assertFalse(testPatientTwo.getStatus());
+        testPatientTwo.patientDischarged();
+        assertTrue(testPatientTwo.getStatus());
     }
 
     @Test
@@ -80,9 +80,9 @@ public class PatientTest {
 
     @Test
     public void testIsDischargeStatus() {
-        assertFalse(testPatientOne.getDischargeStatus());
-        assertFalse(testPatientTwo.getDischargeStatus());
-        assertFalse(testPatientThree.getDischargeStatus());
+        assertTrue(testPatientOne.getStatus());
+        assertFalse(testPatientTwo.getStatus());
+        assertFalse(testPatientThree.getStatus());
 
     }
 

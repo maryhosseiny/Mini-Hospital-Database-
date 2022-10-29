@@ -1,0 +1,24 @@
+{
+  "physicians": [
+    {"employeeID": 1234, "employeeName": "Danny", "patients":  []},
+    {"employeeID": 4567, "employeeName": "Tana", "patients":  []},
+    {"employeeID": 7890, "employeeName": "Sara", "patients":  []},
+    {"employeeID": 1212, "employeeName": "Peppa", "patients":  []}
+  ],
+  "nurses": [
+    {"employeeID": 4444, "employeeName": "Lena", "patients":  []},
+    {"employeeID": 3333, "employeeName": "Maya", "patients":  []},
+    {"employeeID": 3331, "employeeName": "Miya", "patients":  []}
+  ],
+  "patients": [
+    {"name": "Ella", "age": 20, "personalHealthNumber":234111, "dischargeStatus": true, "roomNum": 1},
+    {"name": "Bam", "age": 45, "personalHealthNumber":111999, "dischargeStatus": false,"roomNum": 2},
+    {"name": "Sam", "age": 36, "personalHealthNumber":818181, "dischargeStatus": false,"roomNum": 3}
+  ],
+  "medication": [
+    {"name": "Acetaminophen", "serialNum": 123456, "brand": "Kirkland"},
+    {"name": "Amoxicillin", "serialNum": 123678, "brand": "Trimox"},
+    {"name": "Levothyroxine", "serialNum": 456789, "brand": "Synthyroid"}
+  ]
+}
+

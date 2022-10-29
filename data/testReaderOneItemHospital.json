@@ -1,0 +1,14 @@
+{
+  "physicians": [
+    {"employeeID": 1234, "employeeName": "Danny", "patients":  []}
+  ],
+  "nurses": [
+    {"employeeID": 4444, "employeeName": "Lena", "patients":  []}
+  ],
+  "patients": [
+    {"name": "Ella", "age": 20, "personalHealthNumber":234111, "dischargeStatus": true, "roomNum": 1}
+  ],
+  "medication": [
+    {"name": "Acetaminophen", "serialNum": 123456, "brand": "Kirkland"}
+  ]
+}

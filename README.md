@@ -25,8 +25,6 @@ be a good idea.
 
 The *user stories* describe how someone can use the application to produce a 
 specific outcome.
-- As a user, I want to view the number of tasks I have completed in total
-
 - As a user, I want to be able to add and remove a patient to a list of patients
 - As a user, I want to add and remove medication from the available medication within the hospital
 - As a user, I want to see a list of staff members with their names and employee IDs

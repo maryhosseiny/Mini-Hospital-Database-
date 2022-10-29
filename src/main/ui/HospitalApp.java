@@ -1,23 +1,30 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Represents a hospital database application
 public class HospitalApp {
+    private static final String JSON_STORE = "./data/hospital.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     private Hospital hospital;
     private Scanner input;
     private Physician physicianOne = new Physician(1234, "Danny");
     private Physician physicianTwo = new Physician(4567, "Tana");
     private Physician physicianThree = new Physician(7890, "Sara");
     private Physician physicianFour = new Physician(1212, "Peppa");
-    private Patient patientOne = new Patient("Ella", 20, 234111, 1);
-    private Patient patientTwo = new Patient("Bam", 45, 111999, 2);
-    private Patient patientThree = new Patient("Sam", 36, 818181, 3);
+    private Patient patientOne = new Patient("Ella", 20, 234111,false, 1);
+    private Patient patientTwo = new Patient("Bam", 45, 111999, false,2);
+    private Patient patientThree = new Patient("Sam", 36, 818181, false, 3);
     private Nurse nurseOne = new Nurse(4444, "Lena");
     private Nurse nurseTwo = new Nurse(3333, "Maya");
-    private Nurse nurseThree = new Nurse(3333, "Maya");
+    private Nurse nurseThree = new Nurse(3330, "Miya");
     private Medication medicationOne = new Medication("Acetaminophen", 123456, "Kirkland");
     private Medication medicationTwo = new Medication("Amoxicillin", 123678, "Trimox");
     private Medication medicationThree = new Medication("Levothyroxine", 456789, "Synthyroid");
@@ -26,9 +33,14 @@ public class HospitalApp {
 
 
     // EFFECTS: runs the hospital application
-    public HospitalApp() {
+    public HospitalApp() throws FileNotFoundException {
+        input = new Scanner(System.in);
+        hospital = new Hospital();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runHospital();
     }
+
 
     // MODIFIES: this
     // EFFECTS: processes user input
@@ -106,6 +118,10 @@ public class HospitalApp {
             addPatient();
         } else if (command.equals("remove")) {
             removePatient();
+        } else if (command.equals("save")) {
+            saveHospital();
+        } else if (command.equals("load")) {
+            loadHospital();
         } else if (command.equals("return")) {
             displayMenu();
         } else {
@@ -113,15 +129,41 @@ public class HospitalApp {
         }
     }
 
+    // EFFECTS: saves the database to file
+    private void saveHospital() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(hospital);
+            jsonWriter.close();
+            System.out.println("The hospital database is saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads database from file
+    private void loadHospital() {
+        try {
+            hospital = jsonReader.read();
+            System.out.println("Loaded the previous hospital database from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nWelcome to the Student Hospital Database.");
         System.out.println("You can select the following options to explore the database further.");
-        System.out.println("Remember to enter 'return' if you would like to return to the main menu. Enjoy!");
+        System.out.println("Remember to enter 'return' if you would like to return to the main menu!");
+        System.out.println("Remember to enter 'save' if you would like to save your work!");
         System.out.println("\nSelect from:");
         System.out.println("\tstaff -> staff database");
         System.out.println("\tpatient -> patient database");
         System.out.println("\tmedication -> medication database");
+        System.out.println("\tsave -> save changes in the hospital database to file");
+        System.out.println("\tload -> load previous hospital database from file");
         System.out.println("\tquit -> to quit");
 
     }
@@ -157,6 +199,7 @@ public class HospitalApp {
     }
 
     // REQUIRES: the inputted patient must not be in the hospital database
+    // MODIFIES: this
     // EFFECTS: adds a patient to the hospital patient database
     public void addPatient() {
         Scanner userInput = new Scanner(System.in);
@@ -165,28 +208,32 @@ public class HospitalApp {
         int roomNum = (int)(Math.random() * (max - min));
         int age = userInput.nextInt();
         int phn = userInput.nextInt();
-        Patient newPatient = new Patient(name, age, phn, roomNum);
+        Boolean dischargeStatus = false;
+        Patient newPatient = new Patient(name, age, phn, dischargeStatus, roomNum);
         hospital.addPatient(newPatient);
         System.out.println("The patient is now added to our system. Please press 'return' to go back to the main menu");
     }
 
     // REQUIRES: the inputted patient must be in the hospital database
+    // MODIFIES: this
     // EFFECTS: removes a patient from the hospital patient database
     public void removePatient() {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Here is a list of all patients available in the database.");
         viewPatients();
-        System.out.println("Please enter the patient's name, age, PHN and room number to be removed.");
+        System.out.println("Enter patient's name, age, PHN, discharge status(true/false) and room number to remove.");
         String name = userInput.nextLine();
         int age = userInput.nextInt();
         int phn = userInput.nextInt();
         int roomNum = userInput.nextInt();
-        Patient newPatient = new Patient(name, age, phn, roomNum);
+        Boolean dischargeStatus = userInput.nextBoolean();
+        Patient newPatient = new Patient(name, age, phn, dischargeStatus, roomNum);
         hospital.removePatient(newPatient);
         System.out.println("The patient is now added to our system. Please press 'return' to go back to the main menu");
     }
 
     // REQUIRES: the inputted medication must not be in the hospital database
+    // MODIFIES: this
     // EFFECTS: adds a medication to the hospital medication database
     public void addMedication() {
         Scanner userInput = new Scanner(System.in);
@@ -198,8 +245,9 @@ public class HospitalApp {
         hospital.addMedication(newMed);
         System.out.println("The medication is now added. Please press 'return' to go back to the main menu");
     }
-    
+
     // REQUIRES: the inputted medication must be in the hospital database
+    // MODIFIES: this
     // EFFECTS: removes a medication form the hospital medication database
     public void removeMedication() {
         Scanner userInput = new Scanner(System.in);
@@ -231,10 +279,11 @@ public class HospitalApp {
 
     // EFFECTS: prints the name, age, PHN and room number of all patients in the database
     //          if the list is empty, returns an empty string
+    @SuppressWarnings({"checkstyle:LineLength", "checkstyle:SuppressWarnings"})
     public String retrievePatients() {
         String listPatients = "";
         for (Patient p: hospital.getPatients()) {
-            listPatients += "{" + p.getName() + "," + p.getAge() + "," + p.getPHN() + "," + p.getRoom() + "}" + " ";
+            listPatients += "{" + p.getName() + "," + p.getAge() + "," + p.getPHN() + "," + p.getStatus() + "," + p.getRoom() + "}" + " ";
         }
         return listPatients;
     }
