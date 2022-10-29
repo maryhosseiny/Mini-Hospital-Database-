@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,8 +45,16 @@ public class PatientTest {
         assertEquals(testPatientOne.getAge(), 20);
         assertEquals(testPatientOne.getPHN(), 234111);
         assertEquals(testPatientOne.getRoom(), 1);
+    }
 
-
+    @Test
+    public void testToJson() {
+        JSONObject json = testPatientTwo.toJson();
+        assertEquals(json.get("name"), testPatientTwo.getName());
+        assertEquals(json.get("age"), testPatientTwo.getAge());
+        assertEquals(json.get("personalHealthNumber"), testPatientTwo.getPHN());
+        assertEquals(json.get("roomNum"), testPatientTwo.getRoom());
+        assertEquals(json.get("dischargeStatus"), testPatientTwo.getStatus());
     }
 
     @Test

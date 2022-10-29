@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,6 +47,63 @@ public class HospitalTest {
         assertEquals(testHospital.getPatients().size(), 0);
         assertEquals(testHospital.getNurses().size(), 0);
         assertEquals(testHospital.getMedication().size(), 0);
+    }
+
+    @Test
+    public void testPatientsToJson() {
+        testHospital.addPatient(testPatientOne);
+        testHospital.addPatient(testPatientThree);
+        JSONObject patient1 = (JSONObject) testHospital.patientsToJson().get(0);
+        assertEquals(testPatientOne.toJson().get("name"), patient1.get("name"));
+        assertEquals(testPatientOne.toJson().get("age"), patient1.get("age"));
+        assertEquals(testPatientOne.toJson().get("personalHealthNumber"), patient1.get("personalHealthNumber"));
+        assertEquals(testPatientOne.toJson().get("roomNum"), patient1.get("roomNum"));
+        assertEquals(testPatientOne.toJson().get("dischargeStatus"), patient1.get("dischargeStatus"));
+        JSONObject patient2 = (JSONObject) testHospital.patientsToJson().get(1);
+        assertEquals(testPatientThree.toJson().get("name"), patient2.get("name"));
+        assertEquals(testPatientThree.toJson().get("age"), patient2.get("age"));
+        assertEquals(testPatientThree.toJson().get("personalHealthNumber"), patient2.get("personalHealthNumber"));
+        assertEquals(testPatientThree.toJson().get("roomNum"), patient2.get("roomNum"));
+        assertEquals(testPatientThree.toJson().get("dischargeStatus"), patient2.get("dischargeStatus"));
+    }
+
+    @Test
+    public void testNursesToJson() {
+        testHospital.addNurse(testNurseOne);
+        testHospital.addNurse(testNurseTwo);
+        JSONObject nurse1 = (JSONObject) testHospital.nursesToJson().get(0);
+        assertEquals(testNurseOne.toJson().get("employeeID"), nurse1.get("employeeID"));
+        assertEquals(testNurseOne.toJson().get("employeeName"), nurse1.get("employeeName"));
+        JSONObject nurse2 = (JSONObject) testHospital.nursesToJson().get(1);
+        assertEquals(testNurseTwo.toJson().get("employeeID"), nurse2.get("employeeID"));
+        assertEquals(testNurseTwo.toJson().get("employeeName"), nurse2.get("employeeName"));
+    }
+
+    @Test
+    public void testPhysiciansToJson() {
+        testHospital.addPhysician(testPhysicianOne);
+        testHospital.addPhysician(testPhysicianTwo);
+        testHospital.addPhysician(testPhysicianFour);
+        JSONObject phys1 = (JSONObject) testHospital.physiciansToJson().get(0);
+        assertEquals(testPhysicianOne.toJson().get("employeeID"), phys1.get("employeeID"));
+        assertEquals(testPhysicianOne.toJson().get("employeeName"), phys1.get("employeeName"));
+        JSONObject phys2 = (JSONObject) testHospital.physiciansToJson().get(1);
+        assertEquals(testPhysicianTwo.toJson().get("employeeID"), phys2.get("employeeID"));
+        assertEquals(testPhysicianTwo.toJson().get("employeeName"), phys2.get("employeeName"));
+    }
+
+    @Test
+    public void testMedicationToJson() {
+        testHospital.addMedication(testMedicationOne);
+        testHospital.addMedication(testMedicationTwo);
+        JSONObject med1 = (JSONObject) testHospital.medicationsToJson().get(0);
+        assertEquals(testMedicationOne.toJson().get("name"), med1.get("name"));
+        assertEquals(testMedicationOne.toJson().get("serialNum"), med1.get("serialNum"));
+        assertEquals(testMedicationOne.toJson().get("brand"), med1.get("brand"));
+        JSONObject med2 = (JSONObject) testHospital.medicationsToJson().get(1);
+        assertEquals(testMedicationTwo.toJson().get("name"), med2.get("name"));
+        assertEquals(testMedicationTwo.toJson().get("serialNum"), med2.get("serialNum"));
+        assertEquals(testMedicationTwo.toJson().get("brand"), med2.get("brand"));
     }
 
     @Test

@@ -36,7 +36,7 @@ public class Hospital implements Writable {
     }
 
     // EFFECTS: returns physicians in this workroom as a JSON array
-    private JSONArray physiciansToJson() {
+    public JSONArray physiciansToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Physician p : physicians) {
             jsonArray.put(p.toJson());
@@ -45,7 +45,7 @@ public class Hospital implements Writable {
     }
 
     // EFFECTS: returns nurses in hospital as a JSON array
-    private JSONArray nursesToJson() {
+    public JSONArray nursesToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Nurse n : nurses) {
             jsonArray.put(n.toJson());
@@ -54,7 +54,7 @@ public class Hospital implements Writable {
     }
 
     // EFFECTS: returns patients in hospital as a JSON array
-    private JSONArray patientsToJson() {
+    public JSONArray patientsToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Patient p : patients) {
             jsonArray.put(p.toJson());
@@ -63,7 +63,7 @@ public class Hospital implements Writable {
     }
 
     // EFFECTS: returns medication in hospital as a JSON array
-    private JSONArray medicationsToJson() {
+    public JSONArray medicationsToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Medication m : medications) {
             jsonArray.put(m.toJson());

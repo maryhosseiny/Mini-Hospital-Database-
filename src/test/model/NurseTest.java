@@ -1,7 +1,11 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,6 +44,13 @@ public class NurseTest {
         testNurseThree.addPatient(testPatientThree);
         assertEquals(testNurseOne.getPatientListSize(), 2);
         assertEquals(testNurseThree.getPatientListSize(), 1);
+    }
+
+    @Test
+    public void testToJson() {
+        JSONObject json = testNurseOne.toJson();
+        assertEquals(json.get("employeeName"), testNurseOne.getEmployeeName());
+        assertEquals(json.get("employeeID"), testNurseOne.getEmployeeId());
     }
 
     @Test
