@@ -44,10 +44,10 @@
             "age": 36
         },
         {
-            "personalHealthNumber": 454647,
-            "roomNum": 30,
+            "personalHealthNumber": 3423424,
+            "roomNum": 48,
             "dischargeStatus": false,
-            "name": "Simmy",
+            "name": "Mary",
             "age": 20
         }
     ],
@@ -66,6 +66,16 @@
             "serialNum": 456789,
             "name": "Levothyroxine",
             "brand": "Synthyroid"
+        },
+        {
+            "serialNum": 123,
+            "name": "A",
+            "brand": ""
+        },
+        {
+            "serialNum": 1234,
+            "name": "Abby",
+            "brand": ""
         }
     ],
     "nurses": [

@@ -45,7 +45,7 @@ public class HospitalApp {
     // MODIFIES: this
     // EFFECTS: processes user input
     // taken and modified from the TellerApp code provided in class
-    private void runHospital() {
+    public void runHospital() {
         boolean keepGoing = true;
         String command = null;
 
@@ -69,7 +69,7 @@ public class HospitalApp {
     // MODIFIES: this
     // EFFECTS: initializes accounts
     // taken and modified from the TellerApp code provided in class
-    private void init() {
+    public void init() {
         hospital = new Hospital();
         hospital.addPatient(patientOne);
         hospital.addPatient(patientTwo);
@@ -93,7 +93,7 @@ public class HospitalApp {
     // EFFECTS: processes user command
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     // taken and modified from the TellerApp code provided in class
-    private void processCommand(String command) {
+    public void processCommand(String command) {
         if (command.equals("staff")) {
             displayMenuStaff();
         } else if (command.equals("patient")) {
@@ -130,7 +130,7 @@ public class HospitalApp {
     }
 
     // EFFECTS: saves the database to file
-    private void saveHospital() {
+    public void saveHospital() {
         try {
             jsonWriter.open();
             jsonWriter.write(hospital);
@@ -143,7 +143,7 @@ public class HospitalApp {
 
     // MODIFIES: this
     // EFFECTS: loads database from file
-    private void loadHospital() {
+    public void loadHospital() {
         try {
             hospital = jsonReader.read();
             System.out.println("Loaded the previous hospital database from " + JSON_STORE);
@@ -153,7 +153,7 @@ public class HospitalApp {
     }
 
     // EFFECTS: displays menu of options to user
-    private void displayMenu() {
+    public void displayMenu() {
         System.out.println("\nWelcome to the Student Hospital Database.");
         System.out.println("You can select the following options to explore the database further.");
         System.out.println("Remember to enter 'return' if you would like to return to the main menu!");
@@ -169,7 +169,7 @@ public class HospitalApp {
     }
 
     // EFFECTS: displays staff menu of options to user
-    private void displayMenuStaff() {
+    public void displayMenuStaff() {
         System.out.println("\nSelect from:");
         System.out.println("\tphysicians -> view physicians");
         System.out.println("\tnurses -> view nurses");
@@ -178,7 +178,7 @@ public class HospitalApp {
     }
 
     // EFFECTS: displays medication menu of options to user
-    private void displayMenuMedication() {
+    public void displayMenuMedication() {
         System.out.println("\nSelect from:");
         System.out.println("\tmedications -> view medications");
         System.out.println("\tadd med -> to add a new medication to the data base");
@@ -188,7 +188,7 @@ public class HospitalApp {
     }
 
     // EFFECTS: displays patient menu of options to user
-    private void displayMenuPatient() {
+    public void displayMenuPatient() {
         System.out.println("\nSelect from:");
         System.out.println("\tpatients -> view all patients");
         System.out.println("\tdischarged -> view discharged patients");
@@ -237,10 +237,10 @@ public class HospitalApp {
     // EFFECTS: adds a medication to the hospital medication database
     public void addMedication() {
         Scanner userInput = new Scanner(System.in);
-        System.out.println("Please enter the medication's name, serial number, and brand.");
+        System.out.println("Please enter the medication's name, brand and serial number.");
         String name = userInput.nextLine();
-        int serialNum = userInput.nextInt();
         String brand = userInput.nextLine();
+        int serialNum = userInput.nextInt();
         Medication newMed = new Medication(name, serialNum, brand);
         hospital.addMedication(newMed);
         System.out.println("The medication is now added. Please press 'return' to go back to the main menu");
@@ -273,7 +273,7 @@ public class HospitalApp {
     }
 
     // EFFECTS: prints the names and employee IDs of all physicians as an output
-    private void viewPhysicians() {
+    public void viewPhysicians() {
         System.out.println("All the current physicians and their employee ID include: " + retrievePhysicians());
     }
 
