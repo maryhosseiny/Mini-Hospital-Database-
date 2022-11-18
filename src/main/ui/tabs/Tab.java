@@ -9,7 +9,7 @@ import java.awt.*;
 // The code below is taken and modified from the SmartHome project in LongFormProblemStarter file
 public abstract class Tab extends JPanel {
 
-    private final SmartHospital controller;
+    public final SmartHospital controller;
 
     //REQUIRES: SmartHomeUI controller that holds this tab
     public Tab(SmartHospital controller) {

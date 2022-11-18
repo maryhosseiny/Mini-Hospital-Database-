@@ -1,6 +1,5 @@
 package ui.tabs;
 
-import ui.Main;
 import ui.SmartHospital;
 
 import javax.swing.*;
@@ -17,10 +16,10 @@ public class ReportTabStaff extends Tab {
     private JTextArea reportText;
     private JLabel reportMessage;
 
-    private JLabel initGreeting;
-    private JLabel optionGreeting;
-    private JLabel returnGreeting;
-    private JLabel saveGreeting;
+    JButton nursesButton;
+    JButton physiciansButton;
+    JButton doctors;
+    JButton nurses;
 
     //EFFECTS: constructs a home tab for console with buttons and a greeting
     public ReportTabStaff(SmartHospital controller) {
@@ -28,12 +27,9 @@ public class ReportTabStaff extends Tab {
 
         setLayout(new GridLayout(0, 1));
 
-        placeGreeting();
-        placeStatusButton();
-
         JPanel reportBlock = new JPanel(new GridLayout(2, 1));
-        reportBlock.setSize(SmartHospital.WIDTH - (SmartHospital.WIDTH / 5),
-                SmartHospital.HEIGHT - (SmartHospital.HEIGHT / 5));
+        reportBlock.setSize(controller.WIDTH - (controller.WIDTH / 5),
+                controller.HEIGHT - (controller.HEIGHT / 5));
         reportMessage = new JLabel("");
         reportPane = new JScrollPane(new JTextArea(6, 40));
         reportText = new JTextArea("", 6, 40);
@@ -43,55 +39,66 @@ public class ReportTabStaff extends Tab {
         reportBlock.add(reportPane);
 
         add(reportBlock);
-    }
 
-    //EFFECTS: creates greeting at top of console
-    public void placeGreeting() {
-        JButton nursesButton = new JButton("Nurses");
-        JButton physiciansButton = new JButton("Physicians");
+        this.nursesButton = new JButton("Nurses");
+        this.physiciansButton = new JButton("Physicians");
+
         nursesButton.setSize(WIDTH, HEIGHT / 2);
         physiciansButton.setSize(WIDTH, HEIGHT / 2);
         this.add(nursesButton);
         this.add(physiciansButton);
 
-        physiciansButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String buttonPressed = e.getActionCommand();
-                if (buttonPressed.equals("Physicians")) {
-                    String message = "View of all current physicians in the system:";
-                    reportMessage.setText(message);
-                    reportText.setText(getController().getSmartHospital().retrievePhysicians());
-                    reportPane.setViewportView(reportText);
-                }
-
-            }
-        });
-        nursesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String buttonPressed = e.getActionCommand();
-                if (buttonPressed.equals("Nurses")) {
-                    String message = "View of all current nurses in the system:";
-                    reportMessage.setText(message);
-                    String nurses = getController().getSmartHospital().retrieveNurses();
-                    reportText.setText(nurses);
-                    reportPane.setViewportView(reportText);
-                }
-
-            }
-        });
+        quitAndReturnButton();
+//        physicianActionButton();
+//        nursesActionButton();
 
     }
 
+//    //EFFECTS: creates greeting at top of console
+//    public void physicianActionButton() {
+//        physiciansButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String buttonPressed = e.getActionCommand();
+//                if (buttonPressed.equals("Physicians")) {
+//                    String message = "View of all current physicians in the system:";
+//                    reportMessage.setText(message);
+//                    reportMessage.setText(controller.getSmartHospital().retrievePhysicians());
+//                    reportPane.setViewportView(reportMessage);
+//                }
+//
+//            }
+//        });
+//    }
+        //TODO: fix the functionality for both nurses and physicians
+//    //EFFECTS: creates greeting at top of console
+//    public void nursesActionButton() {
+//        nursesButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String buttonPressed = e.getActionCommand();
+//                if (buttonPressed.equals("Nurses")) {
+//                    String message = "View of all current nurses in the system:";
+//                    reportMessage.setText(message);
+//                    String nurses = controller.getSmartHospital().retrieveNurses();
+//                    reportText.setText(nurses);
+//                    reportPane.setViewportView(reportText);
+//                }
+//
+//            }
+//        });
+//
+//    }
+
     //EFFECTS: constructs a status button that switches to the report tab on the console
-    public void placeStatusButton() {
+    public void quitAndReturnButton() {
         JPanel statusBlock = new JPanel();
-        JButton doctors = new JButton("Return");
-        JButton nurses = new JButton("Quit");
+        this.doctors = new JButton("Return");
+        this.nurses = new JButton("Quit");
         statusBlock.add(doctors, BorderLayout.EAST);
         statusBlock.add(nurses, BorderLayout.WEST);
-        //TODO: add functionality for quit and return
+
         this.add(statusBlock);
+        //TODO: add functionality for quit and return
     }
 }
