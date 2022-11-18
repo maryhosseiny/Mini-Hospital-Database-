@@ -6,6 +6,8 @@ import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 // Represents a hospital database application
@@ -222,14 +224,20 @@ public class HospitalApp {
         System.out.println("Here is a list of all patients available in the database.");
         viewPatients();
         System.out.println("Enter patient's name, age, PHN, discharge status(true/false) and room number to remove.");
-        String name = userInput.nextLine();
-        int age = userInput.nextInt();
+        String n = userInput.nextLine();
+        int a = userInput.nextInt();
         int phn = userInput.nextInt();
-        int roomNum = userInput.nextInt();
-        Boolean dischargeStatus = userInput.nextBoolean();
-        Patient newPatient = new Patient(name, age, phn, dischargeStatus, roomNum);
-        hospital.removePatient(newPatient);
-        System.out.println("The patient is now added to our system. Please press 'return' to go back to the main menu");
+        Boolean s = userInput.nextBoolean();
+        int room = userInput.nextInt();
+        LinkedList<Patient> patients = hospital.getPatients();
+        for (Patient p: patients) {
+            Boolean conditionOne = ((p.getName().equals(n)) && (p.getAge() == a) && (p.getPHN() == phn));
+            Boolean conditionTwo = ((p.getStatus() == s) && (p.getRoom() == room));
+            if (conditionOne && conditionTwo) {
+                hospital.removePatient(p);
+            }
+        }
+        System.out.println("The patient is removed from our system. Please press 'return' to go back to the main menu");
     }
 
     // REQUIRES: the inputted medication must not be in the hospital database
@@ -253,12 +261,18 @@ public class HospitalApp {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Here is a list of all medications available in the database.");
         viewMedication();
-        System.out.println("Please enter the medication's name, serial number, and brand to be removed.");
+        System.out.println("Please enter the medication's name, brand, and serial number to be removed.");
         String name = userInput.nextLine();
-        int serialNum = userInput.nextInt();
         String brand = userInput.nextLine();
-        Medication newMed = new Medication(name, serialNum, brand);
-        hospital.removeMedication(newMed);
+        int serialNum = userInput.nextInt();
+        LinkedList<Medication> medicationList = hospital.getMedication();
+        for (Medication m: medicationList) {
+            Boolean conditionOne = (m.getName().equals(name) && m.getBrand().equals(brand));
+            Boolean conditionTwo = (m.getSerialNumber() == serialNum);
+            if (conditionOne && conditionTwo) {
+                hospital.removeMedication(m);
+            }
+        }
         System.out.println("The medication is now removed. Please press 'return' to go back to the main menu");
     }
 

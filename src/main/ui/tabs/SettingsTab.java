@@ -11,7 +11,6 @@ public class SettingsTab extends Tab {
     JButton viewPatientsButton;
     JButton viewMedicationButton;
     JButton viewStaffButton;
-    JButton returnButton;
     JButton quitButton;
 
     //EFFECTS: constructs a home tab for console with buttons and a greeting
@@ -71,7 +70,7 @@ public class SettingsTab extends Tab {
         this.add(viewMedicationButton);
     }
 
-    //EFFECTS: constructs a status button that switches to the settings tab on the console
+    //EFFECTS: switches to the staff database tab on the console when the staff database button is clicked
     private void staffDataBaseButton() {
 
         viewStaffButton.addActionListener(new ActionListener() {
@@ -90,12 +89,11 @@ public class SettingsTab extends Tab {
     //EFFECTS: constructs a status button that switches to the report tab on the console
     public void quitAndReturnButton() {
         JPanel statusBlock = new JPanel();
-        this.returnButton = new JButton("Return");
+
         this.quitButton = new JButton("Quit");
-        statusBlock.add(returnButton, BorderLayout.EAST);
         statusBlock.add(quitButton, BorderLayout.WEST);
 
         this.add(statusBlock);
-        //TODO: add functionality for quit and return
+        //TODO: add functionality for quit
     }
 }

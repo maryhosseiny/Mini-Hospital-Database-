@@ -4,6 +4,8 @@ import ui.SmartHospital;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ReportTabMeds extends Tab {
 
@@ -11,7 +13,7 @@ public class ReportTabMeds extends Tab {
     JButton addMedicationButton;
     JButton removeMedicationButton;
     JButton returnButton;
-    JButton quitButton;
+    JButton saveButton;
 
     //EFFECTS: constructs a home tab for console with buttons and a greeting
     public ReportTabMeds(SmartHospital controller) {
@@ -38,11 +40,41 @@ public class ReportTabMeds extends Tab {
     public void quitAndReturnButton() {
         JPanel statusBlock = new JPanel();
         this.returnButton = new JButton("Return");
-        this.quitButton = new JButton("Quit");
+        this.saveButton = new JButton("Save");
         statusBlock.add(returnButton, BorderLayout.EAST);
-        statusBlock.add(quitButton, BorderLayout.WEST);
+        statusBlock.add(saveButton, BorderLayout.WEST);
 
         this.add(statusBlock);
-        //TODO: add functionality for quit and return
+        returnButtonFunction();
+        saveButtonFunction();
+
+    }
+
+    //EFFECTS: creates greeting at top of console
+    public void saveButtonFunction() {
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Save")) {
+                    getController().saveHospital();
+                }
+
+            }
+        });
+    }
+
+    //EFFECTS: constructs a return button that switches to the settings tab on the console
+    private void returnButtonFunction() {
+
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Return")) {
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.SETTINGS_TAB_INDEX);
+                }
+            }
+        });
     }
 }

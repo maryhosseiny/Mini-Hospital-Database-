@@ -4,6 +4,8 @@ import ui.SmartHospital;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ReportTabPatients extends Tab {
     JButton viewPatientButton;
@@ -11,7 +13,9 @@ public class ReportTabPatients extends Tab {
     JButton removePatientButton;
     JButton viewDischargedPatientButton;
     JButton returnButton;
-    JButton quitButton;
+    private JScrollPane reportPane;
+    private JTextArea reportText;
+    private JLabel reportMessage;
 
     //EFFECTS: constructs a home tab for console with buttons and a greeting
     public ReportTabPatients(SmartHospital controller) {
@@ -29,25 +33,115 @@ public class ReportTabPatients extends Tab {
         removePatientButton.setSize(WIDTH, HEIGHT / 2);
         viewDischargedPatientButton.setSize(WIDTH, HEIGHT / 2);
 
-
         this.add(viewPatientButton);
         this.add(addPatientButton);
         this.add(removePatientButton);
         this.add(viewDischargedPatientButton);
 
+        JPanel reportBlock = new JPanel(new GridLayout(2, 1));
+        reportBlock.setSize(controller.WIDTH - (controller.WIDTH / 5),
+                controller.HEIGHT - (controller.HEIGHT / 5));
+        reportMessage = new JLabel("");
+        reportPane = new JScrollPane(new JTextArea(6, 40));
+        reportText = new JTextArea("", 6, 40);
+        reportText.setVisible(true);
+
+        reportBlock.add(reportMessage);
+        reportBlock.add(reportPane);
+        add(reportBlock);
 
         quitAndReturnButton();
+        patientActionButton();
+        patientDisActionButton();
+        patientRemoveActionButton();
     }
 
     //EFFECTS: constructs a status button that switches to the report tab on the console
     public void quitAndReturnButton() {
         JPanel statusBlock = new JPanel();
         this.returnButton = new JButton("Return");
-        this.quitButton = new JButton("Quit");
         statusBlock.add(returnButton, BorderLayout.EAST);
-        statusBlock.add(quitButton, BorderLayout.WEST);
 
         this.add(statusBlock);
-        //TODO: add functionality for quit and return
+        returnButtonFunction();
     }
+
+    //EFFECTS: constructs a return button that switches to the settings tab on the console
+    private void returnButtonFunction() {
+
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Return")) {
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.SETTINGS_TAB_INDEX);
+                }
+            }
+        });
+    }
+
+    //EFFECTS: creates greeting at top of console
+    public void patientActionButton() {
+        viewPatientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("View Patients")) {
+                    String message = "View of all current patients in the system:";
+                    reportMessage.setText(message);
+                    String physicians = getController().retrievePatients();
+                    reportText.setText(physicians);
+                    reportPane.setViewportView(reportText);
+                }
+
+            }
+        });
+    }
+
+    //EFFECTS: creates greeting at top of console
+    public void patientRemoveActionButton() {
+        viewPatientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Remove Patient")) {
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.REPORT_TAB_INDEX_PATS_REMOVE);
+
+                }
+
+            }
+        });
+    }
+
+    //EFFECTS: creates greeting at top of console
+    public void patientDisActionButton() {
+        viewDischargedPatientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("View Discharged Patients")) {
+                    String message = "View of all discharged patients in the system:";
+                    reportMessage.setText(message);
+                    String physicians = getController().retrieveDischarged();
+                    reportText.setText(physicians);
+                    reportPane.setViewportView(reportText);
+                }
+
+            }
+        });
+    }
+
+//    //EFFECTS: constructs a return button that switches to the settings tab on the console
+//    private void saveButtonFunction() {
+//
+//        returnButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String buttonPressed = e.getActionCommand();
+//                if (buttonPressed.equals("Save")) {
+//                    getController().getSmartHospital();
+//                }
+//            }
+//        });
+//    }
 }
