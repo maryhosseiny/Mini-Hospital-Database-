@@ -25,7 +25,7 @@ public abstract class Tab extends JPanel {
         return p;
     }
 
-    //EFFECTS: returns the SmartHomeUI controller for this tab
+    //EFFECTS: returns the SmartHospital controller for this tab
     public SmartHospital getController() {
         return this.controller;
     }

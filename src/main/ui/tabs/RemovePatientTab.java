@@ -1,122 +1,149 @@
 package ui.tabs;
 
 import ui.SmartHospital;
+import ui.TextChangesDocumentListener;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static java.lang.Boolean.parseBoolean;
+import static java.lang.Integer.parseInt;
+
 public class RemovePatientTab extends Tab {
     private JButton returnButton;
     private JButton saveButton;
-    private JButton submitButton;
+    private JButton removeButton;
+    private JButton addButton;
+
+    private JTextField reportTextName;
+    private JTextField reportTextAge;
+    private JTextField reportTextPhn;
+    private JTextField reportTextStatus;
+    private JTextField reportTextRoom;
 
     private JScrollPane reportPaneName;
-    private JTextArea reportTextName;
     private JScrollPane reportPaneAge;
-    private JTextArea reportTextAge;
     private JScrollPane reportPanePhn;
-    private JTextArea reportTextPhn;
     private JScrollPane reportPaneStatus;
-    private JTextArea reportTextStatus;
     private JScrollPane reportPaneRoom;
-    private JTextArea reportTextRoom;
+
+    private String messageOne = "Here is a list of all patients in the database.";
+    private String messageTwo = "Enter the information of the patient. Choose add or remove.";
 
     private JLabel pageTitle;
     private JLabel patients;
     private JLabel patientNameArea;
     private JLabel patientAgeArea;
-    private JLabel patientPHNArea;
+    private JLabel patientPhnArea;
     private JLabel patientStatusArea;
     private JLabel patientRoomArea;
+
+    private JPanel reportBlockTitle;
+    private JPanel reportBlockPatient;
+    private JPanel reportBlockName;
+    private JPanel reportBlockAge;
+    private JPanel reportBlockPhn;
+    private JPanel reportBlockStatus;
+    private JPanel reportBlockRoom;
 
 
     //EFFECTS: constructs a home tab for console with buttons and a greeting
     public RemovePatientTab(SmartHospital controller) {
         super(controller);
+        setLayout(new GridLayout(8, 8));
+        setUpIntro();
+        setPatientNameArea();
+        setPatientAgeArea();
+        setPatientPhnArea();
+        setPatientStatusArea();
+        setPatientRoomArea();
+        reportTextNameListen();
+        reportTextAgeListen();
+        reportTextPhnListen();
+        reportTextStatListen();
+        reportTextRoomListen();
+        buttonsMethod();
+        revalidate();
+    }
 
-        setLayout(new GridLayout(8, 5));
-        JPanel p = new JPanel();
-        JPanel reportBlockTitle = new JPanel(new GridLayout(1, 1));
-        JPanel reportBlockPatient = new JPanel(new GridLayout(1, 1));
-        JPanel reportBlockName = new JPanel(new GridLayout(2, 1));
-        JPanel reportBlockAge = new JPanel(new GridLayout(2, 1));
-        JPanel reportBlockPhn = new JPanel(new GridLayout(2, 1));
-        JPanel reportBlockStatus = new JPanel(new GridLayout(2, 1));
-        JPanel reportBlockRoom = new JPanel(new GridLayout(2, 1));
-
-        reportBlockName.setSize(controller.WIDTH,
-                controller.HEIGHT);
-        reportBlockAge.setSize(controller.WIDTH,
-                controller.HEIGHT);
-        reportBlockPhn.setSize(controller.WIDTH,
-                controller.HEIGHT);
-        reportBlockStatus.setSize(controller.WIDTH,
-                controller.HEIGHT);
-        reportBlockRoom.setSize(controller.WIDTH,
-                controller.HEIGHT);
-        pageTitle = new JLabel("Here is a list of all patients in the database. Enter the information of the you would like removed.");
+    public void setUpIntro() {
+        reportBlockTitle = new JPanel(new GridLayout(1, 1));
+        reportBlockPatient = new JPanel(new GridLayout(1, 1));
+        pageTitle = new JLabel(messageOne + " " + messageTwo);
         patients = new JLabel(getController().retrievePatients());
-
-        patientNameArea = new JLabel("Patient Name");
-        patientAgeArea = new JLabel("Patient Age");
-        patientPHNArea = new JLabel("Patient PHN");
-        patientStatusArea = new JLabel("Patient Status");
-        patientRoomArea = new JLabel("Patient Room");
-
-        reportPaneName = new JScrollPane(new JTextArea(6, 20));
-        reportTextName = new JTextArea("", 6, 20);
-        reportTextName.setVisible(true);
-
-        reportPaneAge = new JScrollPane(new JTextArea(6, 20));
-        reportTextAge = new JTextArea("", 6, 20);
-        reportTextAge.setVisible(true);
-
-        reportPanePhn = new JScrollPane(new JTextArea(6, 20));
-        reportTextPhn = new JTextArea("", 6, 20);
-        reportTextPhn.setVisible(true);
-
-        reportPaneStatus = new JScrollPane(new JTextArea(6, 20));
-        reportTextStatus = new JTextArea("", 6, 20);
-        reportTextStatus.setVisible(true);
-
-        reportPaneRoom = new JScrollPane(new JTextArea(6, 20));
-        reportTextRoom = new JTextArea("", 6, 20);
-        reportTextRoom.setVisible(true);
-
-        reportBlockName.add(patientNameArea);
-        reportBlockAge.add(patientAgeArea);
-        reportBlockPhn.add(patientPHNArea);
-        reportBlockStatus.add(patientStatusArea);
-        reportBlockRoom.add(patientRoomArea);
-
-        reportBlockName.add(reportPaneName);
-        reportBlockAge.add(reportPaneAge);
-        reportBlockPhn.add(reportPanePhn);
-        reportBlockStatus.add(reportPaneStatus);
-        reportBlockRoom.add(reportPaneRoom);
-
         reportBlockTitle.add(pageTitle);
         reportBlockTitle.add(patients);
         add(reportBlockTitle);
         add(reportBlockTitle);
+    }
+
+    public void setPatientNameArea() {
+        reportBlockName = new JPanel(new GridLayout(2, 4));
+        reportBlockName.setSize(controller.WIDTH, controller.HEIGHT);
+        patientNameArea = new JLabel("Patient Name");
+        reportPaneName = new JScrollPane(new JTextArea(6, 20));
+        reportTextName = new JTextField();
+        reportTextName.setVisible(true);
+        reportTextName.getDocument().addDocumentListener(new TextChangesDocumentListener(reportTextName));
+        reportBlockName.add(patientNameArea);
+        reportBlockName.add(reportPaneName);
         add(reportBlockName);
+    }
+
+    public void setPatientAgeArea() {
+        reportBlockAge = new JPanel(new GridLayout(2, 3));
+        reportBlockAge.setSize(controller.WIDTH, controller.HEIGHT);
+        patientAgeArea = new JLabel("Patient Age");
+        reportPaneAge = new JScrollPane(new JTextArea(6, 20));
+        reportTextAge = new JTextField();
+        reportTextAge.setVisible(true);
+        reportTextAge.getDocument().addDocumentListener(new TextChangesDocumentListener(reportTextAge));
+        reportBlockAge.add(patientAgeArea);
+        reportBlockAge.add(reportPaneAge);
         add(reportBlockAge);
+    }
+
+    public void setPatientPhnArea() {
+        reportBlockPhn = new JPanel(new GridLayout(2, 2));
+        reportBlockPhn.setSize(controller.WIDTH, controller.HEIGHT);
+        patientPhnArea = new JLabel("Patient PHN");
+        reportPanePhn = new JScrollPane(new JTextArea(6, 20));
+        reportTextPhn = new JTextField();
+        reportTextPhn.setVisible(true);
+        reportTextPhn.getDocument().addDocumentListener(new TextChangesDocumentListener(reportTextPhn));
+        reportBlockPhn.add(patientPhnArea);
+        reportBlockPhn.add(reportPanePhn);
         add(reportBlockPhn);
+    }
+
+    public void setPatientStatusArea() {
+        reportBlockStatus = new JPanel(new GridLayout(2, 1));
+        reportBlockStatus.setSize(controller.WIDTH, controller.HEIGHT);
+        patientStatusArea = new JLabel("Patient Status");
+        reportPaneStatus = new JScrollPane(new JTextArea(6, 20));
+        reportTextStatus = new JTextField();
+        reportTextStatus.setVisible(true);
+        reportTextStatus.getDocument().addDocumentListener(new TextChangesDocumentListener(reportTextStatus));
+        reportBlockStatus.add(patientStatusArea);
+        reportBlockStatus.add(reportPaneStatus);
         add(reportBlockStatus);
+    }
+
+    public void setPatientRoomArea() {
+        reportBlockRoom = new JPanel(new GridLayout(2, 1));
+        reportBlockRoom.setSize(controller.WIDTH, controller.HEIGHT);
+        patientRoomArea = new JLabel("Patient Room");
+        reportPaneRoom = new JScrollPane(new JTextArea(6, 20));
+        reportTextRoom = new JTextField();
+        reportTextRoom.setVisible(true);
+        reportTextRoom.getDocument().addDocumentListener(new TextChangesDocumentListener(reportTextRoom));
+        reportBlockRoom.add(patientRoomArea);
+        reportBlockRoom.add(reportPaneRoom);
         add(reportBlockRoom);
-
-
-//        // Adding buttons and textfield to panel
-//        // using add() method
-//        p.add(b);
-//        p.add(b1);
-//        p.add(b2);
-//        p.add(l);
-
-        buttonsMethod();
-
     }
 
     //EFFECTS: constructs a status button that switches to the report tab on the console
@@ -124,15 +151,18 @@ public class RemovePatientTab extends Tab {
         JPanel statusBlock = new JPanel();
         this.returnButton = new JButton("Return");
         this.saveButton = new JButton("Save");
-        this.submitButton = new JButton("Submit");
+        this.removeButton = new JButton("Remove");
+        this.addButton = new JButton("Add");
         statusBlock.add(returnButton, BorderLayout.EAST);
-        statusBlock.add(submitButton, BorderLayout.CENTER);
+        statusBlock.add(removeButton, BorderLayout.CENTER);
+        statusBlock.add(addButton, BorderLayout.CENTER);
         statusBlock.add(saveButton, BorderLayout.WEST);
 
         this.add(statusBlock);
         returnButtonFunction();
         saveButtonFunction();
-        submitButtonFunction();
+        removeButtonFunction();
+        addButtonFunction();
     }
 
     //EFFECTS: constructs a return button that switches to the settings tab on the console
@@ -162,15 +192,97 @@ public class RemovePatientTab extends Tab {
         });
     }
 
-    public void submitButtonFunction() {
-        saveButton.addActionListener(new ActionListener() {
+    public void removeButtonFunction() {
+        removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
-                if (buttonPressed.equals("Submit")) {
-                    getController().saveHospital();
+                if (buttonPressed.equals("Remove")) {
+                    reportTextName.addActionListener(this);
+                    reportTextAge.addActionListener(this);
+                    reportTextPhn.addActionListener(this);
+                    reportTextStatus.addActionListener(this);
+                    reportTextRoom.addActionListener(this);
+                    String name = reportTextName.getText();
+                    int age = parseInt(reportTextAge.getText());
+                    int phn = parseInt(reportTextPhn.getText());
+                    Boolean status = parseBoolean(reportTextStatus.getText());
+                    int room = parseInt(reportTextRoom.getText());
+                    getController().removePatient(name, age, phn, status, room);
                 }
             }
         });
     }
+
+    //MODIFIES: this
+    //EFFECTS: add a patients from the patient database when user inputs patient info and clicks add button
+    public void addButtonFunction() {
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Add")) {
+                    reportTextName.addActionListener(this);
+                    reportTextAge.addActionListener(this);
+                    reportTextPhn.addActionListener(this);
+                    reportTextStatus.addActionListener(this);
+                    reportTextRoom.addActionListener(this);
+                    String name = reportTextName.getText();
+                    int age = parseInt(reportTextAge.getText());
+                    int phn = parseInt(reportTextPhn.getText());
+                    Boolean status = parseBoolean(reportTextStatus.getText());
+                    int room = parseInt(reportTextRoom.getText());
+                    getController().addPatient(name, age, phn, status, room);
+                }
+            }
+        });
+    }
+
+    //MODIFIES: this
+    //EFFECTS: removes a patients from the patient database when user inputs patient info and clicks remove button
+    public void reportTextNameListen() {
+        reportTextRoom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                reportTextRoom.getText();
+            }
+        });
+    }
+
+    public void reportTextAgeListen() {
+        reportTextAge.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                parseInt(reportTextAge.getText());
+            }
+        });
+    }
+
+    public void reportTextPhnListen() {
+        reportTextPhn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                parseInt(reportTextPhn.getText());
+            }
+        });
+    }
+
+    public void reportTextStatListen() {
+        reportTextStatus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                parseBoolean(reportTextStatus.getText());
+            }
+        });
+    }
+
+    public void reportTextRoomListen() {
+        reportTextRoom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                parseInt(reportTextRoom.getText());
+            }
+        });
+    }
 }
+

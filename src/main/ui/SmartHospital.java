@@ -45,11 +45,11 @@ public class SmartHospital extends JFrame {
     private Medication medicationThree = new Medication("Levothyroxine", 456789, "Synthyroid");
 
     //MODIFIES: this
-    //EFFECTS: creates SmartHomeUI, loads SmartHome appliances, displays sidebar and tabs
+    //EFFECTS: creates SmartHospital, loads Hospital, displays sidebar and tabs
     public SmartHospital() throws FileNotFoundException {
         JFrame frame = new JFrame();
         frame.setVisible(true);
-        frame.setTitle("SmartHome Console");
+        frame.setTitle("SmartHospital Console");
         frame.setSize(WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         sidebar = new JTabbedPane();
@@ -64,8 +64,7 @@ public class SmartHospital extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes accounts
-    // taken and modified from the TellerApp code provided in class
+    // EFFECTS: initializes hospital
     public void init() {
         hospital.addPatient(patientOne);
         hospital.addPatient(patientTwo);
@@ -106,7 +105,7 @@ public class SmartHospital extends JFrame {
         sidebar.add(patTab, REPORT_TAB_INDEX_PATS);
         sidebar.setTitleAt(REPORT_TAB_INDEX_PATS, "Patients Menu");
         sidebar.add(patRemoveTab, REPORT_TAB_INDEX_PATS_REMOVE);
-        sidebar.setTitleAt(REPORT_TAB_INDEX_PATS_REMOVE, "Remove Patient Menu");
+        sidebar.setTitleAt(REPORT_TAB_INDEX_PATS_REMOVE, "Patient List Modifier");
     }
 
     //EFFECTS: returns SmartHospital object controlled by this UI
@@ -145,68 +144,37 @@ public class SmartHospital extends JFrame {
     // REQUIRES: the inputted patient must not be in the hospital database
     // MODIFIES: this
     // EFFECTS: adds a patient to the hospital patient database
-    public void addPatient() {
-        Scanner userInput = new Scanner(System.in);
-        System.out.println("Please enter the patient's name, age, and Personal Health Number.");
-        String name = userInput.nextLine();
-        int roomNum = (int)(Math.random() * (max - min));
-        int age = userInput.nextInt();
-        int phn = userInput.nextInt();
-        Boolean dischargeStatus = false;
+    public void addPatient(String name, int age, int phn, Boolean dischargeStatus, int roomNum) {
         Patient newPatient = new Patient(name, age, phn, dischargeStatus, roomNum);
         hospital.addPatient(newPatient);
-        System.out.println("The patient is now added to our system. Please press 'return' to go back to the main menu");
     }
 
     // REQUIRES: the inputted patient must be in the hospital database
     // MODIFIES: this
     // EFFECTS: removes a patient from the hospital patient database
-    public void removePatient() {
-        Scanner userInput = new Scanner(System.in);
-        System.out.println("Here is a list of all patients available in the database.");
-        viewPatients();
-        System.out.println("Enter patient's name, age, PHN, discharge status(true/false) and room number to remove.");
-        String n = userInput.nextLine();
-        int a = userInput.nextInt();
-        int phn = userInput.nextInt();
-        Boolean s = userInput.nextBoolean();
-        int room = userInput.nextInt();
+    public void removePatient(String name, int age, int phn, Boolean dischargeStatus, int roomNum) {
         LinkedList<Patient> patients = hospital.getPatients();
         for (Patient p: patients) {
-            Boolean conditionOne = ((p.getName().equals(n)) && (p.getAge() == a) && (p.getPHN() == phn));
-            Boolean conditionTwo = ((p.getStatus() == s) && (p.getRoom() == room));
+            Boolean conditionOne = ((p.getName().equals(name)) && (p.getAge() == age) && (p.getPHN() == phn));
+            Boolean conditionTwo = ((p.getStatus() == dischargeStatus) && (p.getRoom() == roomNum));
             if (conditionOne && conditionTwo) {
                 hospital.removePatient(p);
             }
         }
-        System.out.println("The patient is removed from our system. Please press 'return' to go back to the main menu");
     }
 
     // REQUIRES: the inputted medication must not be in the hospital database
     // MODIFIES: this
     // EFFECTS: adds a medication to the hospital medication database
-    public void addMedication() {
-        Scanner userInput = new Scanner(System.in);
-        System.out.println("Please enter the medication's name, brand and serial number.");
-        String name = userInput.nextLine();
-        String brand = userInput.nextLine();
-        int serialNum = userInput.nextInt();
+    public void addMedication(String name, int serialNum, String brand) {
         Medication newMed = new Medication(name, serialNum, brand);
         hospital.addMedication(newMed);
-        System.out.println("The medication is now added. Please press 'return' to go back to the main menu");
     }
 
     // REQUIRES: the inputted medication must be in the hospital database
     // MODIFIES: this
     // EFFECTS: removes a medication form the hospital medication database
-    public void removeMedication() {
-        Scanner userInput = new Scanner(System.in);
-        System.out.println("Here is a list of all medications available in the database.");
-        viewMedication();
-        System.out.println("Please enter the medication's name, brand, and serial number to be removed.");
-        String name = userInput.nextLine();
-        String brand = userInput.nextLine();
-        int serialNum = userInput.nextInt();
+    public void removeMedication(String name, String brand, int serialNum) {
         LinkedList<Medication> medicationList = hospital.getMedication();
         for (Medication m: medicationList) {
             Boolean conditionOne = (m.getName().equals(name) && m.getBrand().equals(brand));
@@ -215,7 +183,6 @@ public class SmartHospital extends JFrame {
                 hospital.removeMedication(m);
             }
         }
-        System.out.println("The medication is now removed. Please press 'return' to go back to the main menu");
     }
 
     // EFFECTS: prints the names and employee IDs of all physicians in the database
@@ -228,25 +195,15 @@ public class SmartHospital extends JFrame {
         return listPhysicians;
     }
 
-    // EFFECTS: prints the names and employee IDs of all physicians as an output
-    public void viewPhysicians() {
-        System.out.println("All the current physicians and their employee ID include: " + retrievePhysicians());
-    }
-
     // EFFECTS: prints the name, age, PHN and room number of all patients in the database
     //          if the list is empty, returns an empty string
-    @SuppressWarnings({"checkstyle:LineLength", "checkstyle:SuppressWarnings"})
     public String retrievePatients() {
         String listPatients = "";
         for (Patient p: hospital.getPatients()) {
-            listPatients += "{" + p.getName() + "," + p.getAge() + "," + p.getPHN() + "," + p.getStatus() + "," + p.getRoom() + "}" + " ";
+            String nameAndAge = (p.getName() + "," + p.getAge() + ",");
+            listPatients += "{" + nameAndAge + p.getPHN() + "," + p.getStatus() + "," + p.getRoom() + "}" + " ";
         }
         return listPatients;
-    }
-
-    // EFFECTS: prints patient information of all patients in the hospital
-    private void viewPatients() {
-        System.out.println("All the recorded patients and along with their PHN include: " + retrievePatients());
     }
 
     // EFFECTS: prints the names and employee IDs of all nurses in the database
@@ -259,11 +216,6 @@ public class SmartHospital extends JFrame {
         return listNurses;
     }
 
-    // EFFECTS: prints all nurses information from the database
-    private void viewNurses() {
-        System.out.println("All the current nurses and their employee ids include: " + retrieveNurses());
-    }
-
     // EFFECTS: prints the names, serial number and brand of all medications in the database
     //          if the list is empty, returns an empty string
     public String retrieveMedication() {
@@ -272,11 +224,6 @@ public class SmartHospital extends JFrame {
             listMedicationName += "{" + m.getName() + "," + m.getSerialNumber() + "," + m.getBrand() + "}" + " ";
         }
         return listMedicationName;
-    }
-
-    // EFFECTS: prints all medication information from the database
-    private void viewMedication() {
-        System.out.println("All the current medication and their serial number include: " + retrieveMedication());
     }
 
     // EFFECTS: prints the name, age, PHN and room number of all discharged patients in the database
@@ -288,10 +235,4 @@ public class SmartHospital extends JFrame {
         }
         return listDischarged;
     }
-
-    // EFFECTS: prints patient information of all discharged patients in the hospital
-    private void viewDischarged() {
-        System.out.println("All the currently discharged patients out the hospital include: " + retrieveDischarged());
-    }
-
 }

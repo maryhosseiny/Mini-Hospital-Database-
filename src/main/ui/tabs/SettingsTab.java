@@ -12,8 +12,10 @@ public class SettingsTab extends Tab {
     JButton viewMedicationButton;
     JButton viewStaffButton;
     JButton quitButton;
+    JButton loadButton;
 
-    //EFFECTS: constructs a home tab for console with buttons and a greeting
+
+    //EFFECTS: constructs a setting tab for console with 3 menu buttons and 2 buttons for loading or quit the program
     public SettingsTab(SmartHospital controller) {
         super(controller);
 
@@ -36,9 +38,10 @@ public class SettingsTab extends Tab {
         medicationDataBaseButton();
         staffDataBaseButton();
         quitAndReturnButton();
+        revalidate();
     }
 
-    //EFFECTS: constructs a status button that switches to the settings tab on the console
+    //EFFECTS: switches to patients database when patient button is pressed
     private void patientDataBaseButton() {
 
         viewPatientsButton.addActionListener(new ActionListener() {
@@ -54,7 +57,7 @@ public class SettingsTab extends Tab {
         this.add(viewPatientsButton);
     }
 
-    //EFFECTS: constructs a status button that switches to the settings tab on the console
+    //EFFECTS: switches to medication database when medication button is pressed
     private void medicationDataBaseButton() {
 
         viewMedicationButton.addActionListener(new ActionListener() {
@@ -70,7 +73,7 @@ public class SettingsTab extends Tab {
         this.add(viewMedicationButton);
     }
 
-    //EFFECTS: switches to the staff database tab on the console when the staff database button is clicked
+    //EFFECTS: switches to the staff database tab when the staff database button is clicked
     private void staffDataBaseButton() {
 
         viewStaffButton.addActionListener(new ActionListener() {
@@ -86,14 +89,48 @@ public class SettingsTab extends Tab {
         this.add(viewStaffButton);
     }
 
-    //EFFECTS: constructs a status button that switches to the report tab on the console
+    //EFFECTS: constructs a quit and load buttons
     public void quitAndReturnButton() {
         JPanel statusBlock = new JPanel();
-
+        this.loadButton = new JButton("Load");
         this.quitButton = new JButton("Quit");
         statusBlock.add(quitButton, BorderLayout.WEST);
-
+        statusBlock.add(loadButton, BorderLayout.EAST);
         this.add(statusBlock);
-        //TODO: add functionality for quit
+        setLoadButton();
+        setQuitButton();
+    }
+
+    //EFFECTS: loads the previous file onto the database
+    private void setLoadButton() {
+
+        viewStaffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Load")) {
+                    getController().loadHospital();
+                }
+            }
+        });
+
+        this.add(viewStaffButton);
+    }
+
+    //EFFECTS: when quit button is pressed, it will save the file and quit the program
+    private void setQuitButton() {
+
+        viewStaffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Quit")) {
+                    getController().saveHospital();
+                    System.exit(0);
+                }
+            }
+        });
+
+        this.add(viewStaffButton);
     }
 }

@@ -20,7 +20,16 @@ public class ReportTabMeds extends Tab {
         super(controller);
 
         setLayout(new GridLayout(0, 1));
+        setUpMedButtons();
 
+
+
+        quitAndReturnButton();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: constructs add/remove medication button as well as a view medication button
+    public void setUpMedButtons() {
         this.viewMedicationButton = new JButton("View Medication");
         this.addMedicationButton = new JButton("Add Medication");
         this.removeMedicationButton = new JButton("Remove Medication");
@@ -32,11 +41,9 @@ public class ReportTabMeds extends Tab {
         this.add(viewMedicationButton);
         this.add(addMedicationButton);
         this.add(removeMedicationButton);
-
-        quitAndReturnButton();
     }
 
-    //EFFECTS: constructs a status button that switches to the report tab on the console
+    //EFFECTS: constructs a save and return button
     public void quitAndReturnButton() {
         JPanel statusBlock = new JPanel();
         this.returnButton = new JButton("Return");
@@ -47,10 +54,9 @@ public class ReportTabMeds extends Tab {
         this.add(statusBlock);
         returnButtonFunction();
         saveButtonFunction();
-
     }
 
-    //EFFECTS: creates greeting at top of console
+    //EFFECTS: saves the changes in the database when save button is clicked
     public void saveButtonFunction() {
         saveButton.addActionListener(new ActionListener() {
             @Override
@@ -59,12 +65,11 @@ public class ReportTabMeds extends Tab {
                 if (buttonPressed.equals("Save")) {
                     getController().saveHospital();
                 }
-
             }
         });
     }
 
-    //EFFECTS: constructs a return button that switches to the settings tab on the console
+    //EFFECTS: returns to the settings page when return button is pressed
     private void returnButtonFunction() {
 
         returnButton.addActionListener(new ActionListener() {
