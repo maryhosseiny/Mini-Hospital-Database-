@@ -18,6 +18,9 @@ public class HomeTab extends Tab {
     private JLabel optionGreeting;
     private JLabel returnGreeting;
     private JLabel saveGreeting;
+    ImageIcon image = new ImageIcon("this_is_fine.jpg");
+    JLabel icon = new JLabel();
+
 
     //EFFECTS: constructs a home tab for console with buttons and a greeting
     public HomeTab(SmartHospital controller) {
@@ -39,11 +42,13 @@ public class HomeTab extends Tab {
         optionGreeting.setSize(WIDTH, HEIGHT);
         returnGreeting.setSize(WIDTH, HEIGHT);
         saveGreeting.setSize(WIDTH, HEIGHT);
+        icon.setSize(WIDTH, HEIGHT);
+        icon.setIcon(image);
         this.add(initGreeting);
         this.add(optionGreeting);
         this.add(returnGreeting);
         this.add(saveGreeting);
-
+        this.add(icon);
     }
 
     //EFFECTS: constructs a status button that switches to the settings tab on the console

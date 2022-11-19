@@ -33,4 +33,24 @@ specific outcome.
 
 - As a user, I want to be able to save all my patients and medications into a file
 - As a user, I want to be able to view and load the hospital database from file
- 
+
+## Instructions for Grader
+
+- You can generate the first required event related to adding Xs to a Y by clicking 
+the View Patient button. After which you will press the add patient button
+where you are taken to a new page. In this page you will see a list of patients
+as well as place to fill in to add a new patient to the system. Fill in the blanks
+according to their label then press submit to add the patient to the file.
+- You can generate the second required event related to adding Xs to a Y by by clicking
+  the View Patient button. After which you will press the remove patient button
+  where you are taken to a new page. In this page you will see a list of patients
+  as well as boxes to fill in to remove the patient from the database. Fill in the blanks
+  according to their label then press submit to remove the patient from the file.
+- You can locate my visual component by once you start the program, you will see
+a snippet of one of my favorite memes on Twitter (titled This is fine). To see the 
+full image you can enlarge the window.
+- You can save the state of my application by clicking the save button
+provided in all tabs where a change in the system occurs (That is the adding/removing)
+ tabs located on the left side on the side bar.
+- You can reload the state of my application by clicking the load button provided
+in the main menu tab on the side bar.
