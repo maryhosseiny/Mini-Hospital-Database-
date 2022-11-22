@@ -85,12 +85,10 @@ public class RemovePatientTab extends Tab {
         reportBlockName = new JPanel(new GridLayout(2, 4));
         reportBlockName.setSize(controller.WIDTH, controller.HEIGHT);
         patientNameArea = new JLabel("Patient Name");
-        reportPaneName = new JScrollPane(new JTextArea(6, 20));
         reportTextName = new JTextField();
         reportTextName.setVisible(true);
-        reportTextName.getDocument().addDocumentListener(new TextChangesDocumentListener(reportTextName));
         reportBlockName.add(patientNameArea);
-        reportBlockName.add(reportPaneName);
+        reportBlockName.add(reportTextName);
         add(reportBlockName);
     }
 
@@ -98,12 +96,10 @@ public class RemovePatientTab extends Tab {
         reportBlockAge = new JPanel(new GridLayout(2, 3));
         reportBlockAge.setSize(controller.WIDTH, controller.HEIGHT);
         patientAgeArea = new JLabel("Patient Age");
-        reportPaneAge = new JScrollPane(new JTextArea(6, 20));
         reportTextAge = new JTextField();
         reportTextAge.setVisible(true);
-        reportTextAge.getDocument().addDocumentListener(new TextChangesDocumentListener(reportTextAge));
         reportBlockAge.add(patientAgeArea);
-        reportBlockAge.add(reportPaneAge);
+        reportBlockAge.add(reportTextAge);
         add(reportBlockAge);
     }
 
@@ -111,12 +107,10 @@ public class RemovePatientTab extends Tab {
         reportBlockPhn = new JPanel(new GridLayout(2, 2));
         reportBlockPhn.setSize(controller.WIDTH, controller.HEIGHT);
         patientPhnArea = new JLabel("Patient PHN");
-        reportPanePhn = new JScrollPane(new JTextArea(6, 20));
         reportTextPhn = new JTextField();
         reportTextPhn.setVisible(true);
-        reportTextPhn.getDocument().addDocumentListener(new TextChangesDocumentListener(reportTextPhn));
         reportBlockPhn.add(patientPhnArea);
-        reportBlockPhn.add(reportPanePhn);
+        reportBlockPhn.add(reportTextPhn);
         add(reportBlockPhn);
     }
 
@@ -124,12 +118,10 @@ public class RemovePatientTab extends Tab {
         reportBlockStatus = new JPanel(new GridLayout(2, 1));
         reportBlockStatus.setSize(controller.WIDTH, controller.HEIGHT);
         patientStatusArea = new JLabel("Patient Status");
-        reportPaneStatus = new JScrollPane(new JTextArea(6, 20));
         reportTextStatus = new JTextField();
         reportTextStatus.setVisible(true);
-        reportTextStatus.getDocument().addDocumentListener(new TextChangesDocumentListener(reportTextStatus));
         reportBlockStatus.add(patientStatusArea);
-        reportBlockStatus.add(reportPaneStatus);
+        reportBlockStatus.add(reportTextStatus);
         add(reportBlockStatus);
     }
 
@@ -137,12 +129,10 @@ public class RemovePatientTab extends Tab {
         reportBlockRoom = new JPanel(new GridLayout(2, 1));
         reportBlockRoom.setSize(controller.WIDTH, controller.HEIGHT);
         patientRoomArea = new JLabel("Patient Room");
-        reportPaneRoom = new JScrollPane(new JTextArea(6, 20));
         reportTextRoom = new JTextField();
         reportTextRoom.setVisible(true);
-        reportTextRoom.getDocument().addDocumentListener(new TextChangesDocumentListener(reportTextRoom));
         reportBlockRoom.add(patientRoomArea);
-        reportBlockRoom.add(reportPaneRoom);
+        reportBlockRoom.add(reportTextRoom);
         add(reportBlockRoom);
     }
 
@@ -198,11 +188,6 @@ public class RemovePatientTab extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Remove")) {
-                    reportTextName.addActionListener(this);
-                    reportTextAge.addActionListener(this);
-                    reportTextPhn.addActionListener(this);
-                    reportTextStatus.addActionListener(this);
-                    reportTextRoom.addActionListener(this);
                     String name = reportTextName.getText();
                     int age = parseInt(reportTextAge.getText());
                     int phn = parseInt(reportTextPhn.getText());
@@ -222,11 +207,6 @@ public class RemovePatientTab extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Add")) {
-                    reportTextName.addActionListener(this);
-                    reportTextAge.addActionListener(this);
-                    reportTextPhn.addActionListener(this);
-                    reportTextStatus.addActionListener(this);
-                    reportTextRoom.addActionListener(this);
                     String name = reportTextName.getText();
                     int age = parseInt(reportTextAge.getText());
                     int phn = parseInt(reportTextPhn.getText());
