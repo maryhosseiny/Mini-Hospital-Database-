@@ -9,15 +9,15 @@ import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class SmartHospital extends JFrame {
-    public static final int HOME_TAB_INDEX = 0;
-    public static final int SETTINGS_TAB_INDEX = 1;
-    public static final int REPORT_TAB_INDEX_STAFF = 2;
-    public static final int REPORT_TAB_INDEX_MEDS = 3;
-    public static final int REPORT_TAB_INDEX_PATS = 4;
-    public static final int REPORT_TAB_INDEX_PATS_REMOVE = 5;
+    public static final int homeTabIndex = 0;
+    public static final int settingsTabIndex = 1;
+    public static final int staffTabIndex = 2;
+    public static final int medicationTabIndex = 3;
+    public static final int patientTabIndex = 4;
+    public static final int patientModifierTabIndex = 5;
+    public static final int medicationModifierTabIndex = 6;
     private static int max = 100;
     private static int min = 4;
 
@@ -25,8 +25,8 @@ public class SmartHospital extends JFrame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    public static final int WIDTH = 600;
-    public static final int HEIGHT = 400;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 800;
     private JTabbedPane sidebar;
     private Hospital hospital;
 
@@ -34,9 +34,9 @@ public class SmartHospital extends JFrame {
     private Physician physicianTwo = new Physician(4567, "Tana");
     private Physician physicianThree = new Physician(7890, "Sara");
     private Physician physicianFour = new Physician(1212, "Peppa");
-    private Patient patientOne = new Patient("Ella", 20, 234111,false, 1);
-    private Patient patientTwo = new Patient("Bam", 45, 111999, false,2);
-    private Patient patientThree = new Patient("Sam", 36, 818181, false, 3);
+    private Patient patOne = new Patient("Ella", 20, 234111,false, 1);
+    private Patient patTwo = new Patient("Bam", 45, 111999, false,2);
+    private Patient patThree = new Patient("Sam", 36, 818181, false, 3);
     private Nurse nurseOne = new Nurse(4444, "Lena");
     private Nurse nurseTwo = new Nurse(3333, "Maya");
     private Nurse nurseThree = new Nurse(3330, "Miya");
@@ -60,15 +60,14 @@ public class SmartHospital extends JFrame {
         this.hospital = new Hospital();
         init();
         loadTabs();
-
     }
 
     // MODIFIES: this
     // EFFECTS: initializes hospital
     public void init() {
-        hospital.addPatient(patientOne);
-        hospital.addPatient(patientTwo);
-        hospital.addPatient(patientThree);
+        hospital.addPatient(patOne);
+        hospital.addPatient(patTwo);
+        hospital.addPatient(patThree);
         hospital.addNurse(nurseOne);
         hospital.addNurse(nurseTwo);
         hospital.addNurse(nurseThree);
@@ -79,9 +78,8 @@ public class SmartHospital extends JFrame {
         hospital.addPhysician(physicianTwo);
         hospital.addPhysician(physicianThree);
         hospital.addPhysician(physicianFour);
-        patientOne.patientDischarged();
+        patOne.patientDischarged();
     }
-
 
     //MODIFIES: this
     //EFFECTS: adds home tab, settings tab and report tabs to this UI
@@ -91,21 +89,23 @@ public class SmartHospital extends JFrame {
         JPanel staffTab = new ReportTabStaff(this);
         JPanel medTab = new ReportTabMeds(this);
         JPanel patTab = new ReportTabPatients(this);
-        JPanel patRemoveTab = new RemovePatientTab(this);
+        JPanel patRemoveTab = new PatientModifierTab(this);
+        JPanel medRemoveTab = new MedicationModifierTab(this);
 
-
-        sidebar.add(homeTab, HOME_TAB_INDEX);
-        sidebar.setTitleAt(HOME_TAB_INDEX, "Greetings");
-        sidebar.add(settingsTab, SETTINGS_TAB_INDEX);
-        sidebar.setTitleAt(SETTINGS_TAB_INDEX, "Main Menu");
-        sidebar.add(staffTab, REPORT_TAB_INDEX_STAFF);
-        sidebar.setTitleAt(REPORT_TAB_INDEX_STAFF, "Staff Menu");
-        sidebar.add(medTab, REPORT_TAB_INDEX_MEDS);
-        sidebar.setTitleAt(REPORT_TAB_INDEX_MEDS, "Medication Menu");
-        sidebar.add(patTab, REPORT_TAB_INDEX_PATS);
-        sidebar.setTitleAt(REPORT_TAB_INDEX_PATS, "Patients Menu");
-        sidebar.add(patRemoveTab, REPORT_TAB_INDEX_PATS_REMOVE);
-        sidebar.setTitleAt(REPORT_TAB_INDEX_PATS_REMOVE, "Patient List Modifier");
+        sidebar.add(homeTab, homeTabIndex);
+        sidebar.setTitleAt(homeTabIndex, "Greetings");
+        sidebar.add(settingsTab, settingsTabIndex);
+        sidebar.setTitleAt(settingsTabIndex, "Main Menu");
+        sidebar.add(staffTab, staffTabIndex);
+        sidebar.setTitleAt(staffTabIndex, "Staff Menu");
+        sidebar.add(medTab, medicationTabIndex);
+        sidebar.setTitleAt(medicationTabIndex, "Medication Menu");
+        sidebar.add(patTab, patientTabIndex);
+        sidebar.setTitleAt(patientTabIndex, "Patients Menu");
+        sidebar.add(patRemoveTab, patientModifierTabIndex);
+        sidebar.setTitleAt(patientModifierTabIndex, "Patient List Modifier");
+        sidebar.add(medRemoveTab, medicationModifierTabIndex);
+        sidebar.setTitleAt(medicationModifierTabIndex, "Medication List Modifier");
     }
 
     //EFFECTS: returns SmartHospital object controlled by this UI
@@ -135,7 +135,6 @@ public class SmartHospital extends JFrame {
     public void loadHospital() {
         try {
             hospital = jsonReader.read();
-            System.out.println("Loaded the previous hospital database from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }

@@ -1,6 +1,5 @@
 package ui.tabs;
 
-import ui.Main;
 import ui.SmartHospital;
 
 import javax.swing.*;
@@ -18,22 +17,22 @@ public class HomeTab extends Tab {
     private JLabel optionGreeting;
     private JLabel returnGreeting;
     private JLabel saveGreeting;
-    ImageIcon image = new ImageIcon("this_is_fine.jpg");
-    JLabel icon = new JLabel();
+    private ImageIcon image;
+    private JLabel icon;
 
 
     //EFFECTS: constructs a home tab for console with buttons and a greeting
     public HomeTab(SmartHospital controller) {
         super(controller);
-
-        setLayout(new GridLayout(0, 1));
-
-        placeGreeting();
-        placeStatusButton();
+        setLayout(new GridLayout(9, 1));
+        setGreetings();
+        setThisIsFineImage();
+        setProceedButton();
     }
 
-    //EFFECTS: creates greeting at top of console
-    private void placeGreeting() {
+    //MODIFIES: this
+    //EFFECTS: creates greeting and places them on the frame
+    private void setGreetings() {
         initGreeting = new JLabel(INIT_GREETING);
         optionGreeting = new JLabel(OPTION_GREETING);
         returnGreeting = new JLabel(RETURN_GREETING);
@@ -42,31 +41,38 @@ public class HomeTab extends Tab {
         optionGreeting.setSize(WIDTH, HEIGHT);
         returnGreeting.setSize(WIDTH, HEIGHT);
         saveGreeting.setSize(WIDTH, HEIGHT);
-        icon.setSize(WIDTH, HEIGHT);
-        icon.setIcon(image);
-        this.add(initGreeting);
-        this.add(optionGreeting);
-        this.add(returnGreeting);
-        this.add(saveGreeting);
-        this.add(icon);
+
+        add(initGreeting);
+        add(optionGreeting);
+        add(returnGreeting);
+        add(saveGreeting);
     }
 
-    //EFFECTS: constructs a status button that switches to the settings tab on the console
-    private void placeStatusButton() {
+    //MODIFIES: this
+    //EFFECTS: uploads this is fine image onto the frame
+    private void setThisIsFineImage() {
+        icon = new JLabel();
+        image = new ImageIcon("this_is_fine.jpg");
+        icon.setSize(WIDTH, HEIGHT);
+        icon.setIcon(image);
+        add(icon);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: constructs a proceed button that switches to the settings tab
+    private void setProceedButton() {
         JPanel statusBlock = new JPanel();
         JButton statusButton = new JButton("If you have read the above, click this button to proceed");
         statusBlock.add(formatButtonRow(statusButton));
-
         statusButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("If you have read the above, click this button to proceed")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.SETTINGS_TAB_INDEX);
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.settingsTabIndex);
                 }
             }
         });
-
-        this.add(statusBlock);
+        add(statusBlock);
     }
 }

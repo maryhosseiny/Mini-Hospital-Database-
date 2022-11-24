@@ -8,11 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ReportTabPatients extends Tab {
-    JButton viewPatientButton;
-    JButton addPatientButton;
-    JButton removePatientButton;
-    JButton viewDischargedPatientButton;
-    JButton returnButton;
+    private JButton viewPatientButton;
+    private JButton addPatientButton;
+    private JButton removePatientButton;
+    private JButton viewDischargedPatientButton;
+    private JButton returnButton;
     private JScrollPane reportPane;
     private JTextArea reportText;
     private JLabel reportMessage;
@@ -21,11 +21,10 @@ public class ReportTabPatients extends Tab {
     //         along with a text area to view the list of patients
     public ReportTabPatients(SmartHospital controller) {
         super(controller);
-        buttonSetUp();
-        setLayout(new GridLayout(0, 1));
-        JPanel reportBlock = new JPanel(new GridLayout(2, 1));
-        reportBlock.setSize(controller.WIDTH - (controller.WIDTH / 5),
-                controller.HEIGHT - (controller.HEIGHT / 5));
+        setButtons();
+        setLayout(new GridLayout(7, 1));
+        JPanel reportBlock = new JPanel(new GridLayout(0, 1));
+        reportBlock.setSize(WIDTH - (WIDTH / 5),HEIGHT - (HEIGHT / 5));
         reportMessage = new JLabel("");
         reportPane = new JScrollPane(new JTextArea(6, 40));
         reportText = new JTextArea("", 6, 40);
@@ -35,17 +34,12 @@ public class ReportTabPatients extends Tab {
         reportBlock.add(reportPane);
         add(reportBlock);
 
-        patientActionButton();
-        patientAddActionButton();
-        patientRemoveActionButton();
-        patientDisActionButton();
-        returnButton();
-        revalidate();
-
+        setReturnButton();
     }
 
-    //EFFECTS: constructs view patients and discharge patients button and add/remove button
-    public void buttonSetUp() {
+    //EFFECTS: constructs view patients and discharge patients button and add/remove button then adds functionality
+    //         for them
+    public void setButtons() {
         this.viewPatientButton = new JButton("View Patients");
         this.addPatientButton = new JButton("Add Patient");
         this.removePatientButton = new JButton("Remove Patient");
@@ -60,34 +54,38 @@ public class ReportTabPatients extends Tab {
         this.add(addPatientButton);
         this.add(removePatientButton);
         this.add(viewDischargedPatientButton);
+
+        setViewPatFunction();
+        patientAddActionButton();
+        patientRemoveActionButton();
+        patientDisActionButton();
     }
 
-    //EFFECTS: constructs a return button and places it in the frame
-    public void returnButton() {
+    //EFFECTS: constructs a return button and places it in the frame then adds functionality to it
+    public void setReturnButton() {
         JPanel statusBlock = new JPanel();
         this.returnButton = new JButton("Return");
         statusBlock.add(returnButton, BorderLayout.EAST);
 
         this.add(statusBlock);
-        returnActionButton();
+        setReturnFunction();
     }
 
-    //EFFECTS: constructs a return button that switches to the settings tab on the console
-    private void returnActionButton() {
-
+    //EFFECTS: when return button is pressed, switches the frame to the settings tab
+    private void setReturnFunction() {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Return")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.SETTINGS_TAB_INDEX);
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.settingsTabIndex);
                 }
             }
         });
     }
 
-    //EFFECTS: displays a list of discharged patients in the database the view discharged patients button is pressed
-    public void patientActionButton() {
+    //EFFECTS: when view patients button is pressed, a list of patients in the database
+    public void setViewPatFunction() {
         viewPatientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,33 +102,33 @@ public class ReportTabPatients extends Tab {
         });
     }
 
-    //EFFECTS: switches to remove patient tab when add remove patient button is clicked
+    //EFFECTS: when remove patient button is clicked, switches to patient modifier tab
     public void patientRemoveActionButton() {
         removePatientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Remove Patient")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.REPORT_TAB_INDEX_PATS_REMOVE);
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.patientModifierTabIndex);
                 }
             }
         });
     }
 
-    //EFFECTS: switches to the remove patient tab when add patient button is clicked
+    //EFFECTS: when add patient button is clicked, switches to patient modifier tab
     public void patientAddActionButton() {
         addPatientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Add Patient")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.REPORT_TAB_INDEX_PATS_REMOVE);
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.patientModifierTabIndex);
                 }
             }
         });
     }
 
-    //EFFECTS: displays a list of discharged patients in the database the view discharged patients button is pressed
+    //EFFECTS: when view discharged patients button is pressed, displays a list of discharged patients in the database
     public void patientDisActionButton() {
         viewDischargedPatientButton.addActionListener(new ActionListener() {
             @Override
@@ -143,7 +141,6 @@ public class ReportTabPatients extends Tab {
                     reportText.setText(physicians);
                     reportPane.setViewportView(reportText);
                 }
-
             }
         });
     }

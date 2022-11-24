@@ -42,13 +42,6 @@
             "dischargeStatus": false,
             "name": "Sam",
             "age": 36
-        },
-        {
-            "personalHealthNumber": 3423424,
-            "roomNum": 48,
-            "dischargeStatus": false,
-            "name": "Mary",
-            "age": 20
         }
     ],
     "medication": [
@@ -68,14 +61,9 @@
             "brand": "Synthyroid"
         },
         {
-            "serialNum": 123,
-            "name": "A",
-            "brand": ""
-        },
-        {
-            "serialNum": 1234,
-            "name": "Abby",
-            "brand": ""
+            "serialNum": 234,
+            "name": "bibi",
+            "brand": "bobo"
         }
     ],
     "nurses": [

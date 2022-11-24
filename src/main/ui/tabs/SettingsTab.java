@@ -8,103 +8,94 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SettingsTab extends Tab {
-    JButton viewPatientsButton;
-    JButton viewMedicationButton;
-    JButton viewStaffButton;
-    JButton quitButton;
-    JButton loadButton;
+    private JButton viewPatientsButton;
+    private JButton viewMedicationButton;
+    private JButton viewStaffButton;
+    private JButton quitButton;
+    private JButton loadButton;
+    private JPanel statusBlock;
 
 
+    //MODIFIES: this
     //EFFECTS: constructs a setting tab for console with 3 menu buttons and 2 buttons for loading or quit the program
     public SettingsTab(SmartHospital controller) {
         super(controller);
-
-        setLayout(new GridLayout(0, 1));
-
-        this.viewPatientsButton = new JButton("Patient Database");
-        this.viewMedicationButton = new JButton("Medication Database");
-        this.viewStaffButton = new JButton("Staff Database");
-
-        viewPatientsButton.setSize(WIDTH, HEIGHT / 2);
-        viewMedicationButton.setSize(WIDTH, HEIGHT / 2);
-        viewStaffButton.setSize(WIDTH, HEIGHT / 2);
-
-        this.add(viewPatientsButton);
-        this.add(viewMedicationButton);
-        this.add(viewStaffButton);
-
-
-        patientDataBaseButton();
-        medicationDataBaseButton();
-        staffDataBaseButton();
-        quitAndReturnButton();
-        revalidate();
+        setLayout(new GridLayout(7, 1));
+        setButtons();
+        setLoadAndQuitButton();
     }
 
-    //EFFECTS: switches to patients database when patient button is pressed
-    private void patientDataBaseButton() {
+    //MODIFIES: this
+    //EFFECTS: constructs the patient, medication and staff database buttons and adds functionality to them
+    public void setButtons() {
+        viewPatientsButton = new JButton("Patient Database");
+        viewMedicationButton = new JButton("Medication Database");
+        viewStaffButton = new JButton("Staff Database");
+        viewStaffButton.setSize(WIDTH, HEIGHT / 4);
+        viewPatientsButton.setSize(WIDTH, HEIGHT / 4);
+        viewMedicationButton.setSize(WIDTH, HEIGHT / 4);
+        add(viewStaffButton);
+        add(viewPatientsButton);
+        add(viewMedicationButton);
+        setStaffButton();
+        setPatientButton();
+        setMedicationButton();
+    }
 
+    //EFFECTS: switches to patients database tab when patient button is pressed
+    private void setPatientButton() {
         viewPatientsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Patient Database")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.REPORT_TAB_INDEX_PATS);
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.patientTabIndex);
                 }
             }
         });
-
-        this.add(viewPatientsButton);
     }
 
-    //EFFECTS: switches to medication database when medication button is pressed
-    private void medicationDataBaseButton() {
-
+    //EFFECTS: switches to medication database tab when medication button is pressed
+    private void setMedicationButton() {
         viewMedicationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Medication Database")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.REPORT_TAB_INDEX_MEDS);
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.medicationTabIndex);
                 }
             }
         });
-
-        this.add(viewMedicationButton);
     }
 
     //EFFECTS: switches to the staff database tab when the staff database button is clicked
-    private void staffDataBaseButton() {
-
+    private void setStaffButton() {
         viewStaffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Staff Database")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.REPORT_TAB_INDEX_STAFF);
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.staffTabIndex);
                 }
             }
         });
-
-        this.add(viewStaffButton);
     }
 
-    //EFFECTS: constructs a quit and load buttons
-    public void quitAndReturnButton() {
-        JPanel statusBlock = new JPanel();
-        this.loadButton = new JButton("Load");
-        this.quitButton = new JButton("Quit");
+    //EFFECTS: constructs a quit and load buttons and adds functionality to them
+    private void setLoadAndQuitButton() {
+        statusBlock = new JPanel();
+        loadButton = new JButton("Load");
+        quitButton = new JButton("Quit");
         statusBlock.add(quitButton, BorderLayout.WEST);
         statusBlock.add(loadButton, BorderLayout.EAST);
         this.add(statusBlock);
-        setLoadButton();
-        setQuitButton();
+        setLoadFunction();
+        setQuitFunction();
     }
 
-    //EFFECTS: loads the previous file onto the database
-    private void setLoadButton() {
-
-        viewStaffButton.addActionListener(new ActionListener() {
+    //EFFECTS: when load button is pressed, loads the previous file onto the database
+    private void setLoadFunction() {
+        loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
@@ -113,14 +104,11 @@ public class SettingsTab extends Tab {
                 }
             }
         });
-
-        this.add(viewStaffButton);
     }
 
     //EFFECTS: when quit button is pressed, it will save the file and quit the program
-    private void setQuitButton() {
-
-        viewStaffButton.addActionListener(new ActionListener() {
+    private void setQuitFunction() {
+        quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
@@ -130,7 +118,5 @@ public class SettingsTab extends Tab {
                 }
             }
         });
-
-        this.add(viewStaffButton);
     }
 }

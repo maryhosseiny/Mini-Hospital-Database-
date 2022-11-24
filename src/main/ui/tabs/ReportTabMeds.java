@@ -9,26 +9,39 @@ import java.awt.event.ActionListener;
 
 public class ReportTabMeds extends Tab {
 
-    JButton viewMedicationButton;
-    JButton addMedicationButton;
-    JButton removeMedicationButton;
-    JButton returnButton;
-    JButton saveButton;
+    private JButton viewMedicationButton;
+    private JButton addMedicationButton;
+    private JButton removeMedicationButton;
+    private JButton returnButton;
+    private JButton saveButton;
 
-    //EFFECTS: constructs a home tab for console with buttons and a greeting
+    private JScrollPane reportPane;
+    private JTextArea reportText;
+    private JLabel reportMessage;
+
+    //EFFECTS: constructs a modifier tab for with 5 buttons (save, add, remove, return, view medication) and
+    //         a text field for viewing medication
     public ReportTabMeds(SmartHospital controller) {
         super(controller);
 
-        setLayout(new GridLayout(0, 1));
+        setLayout(new GridLayout(7, 1));
         setUpMedButtons();
+        JPanel reportBlock = new JPanel(new GridLayout(0, 1));
+        reportBlock.setSize(WIDTH - (WIDTH / 5),HEIGHT - (HEIGHT / 5));
+        reportMessage = new JLabel("");
+        reportPane = new JScrollPane(new JTextArea(6, 40));
+        reportText = new JTextArea("", 6, 40);
+        reportText.setVisible(true);
 
-
+        reportBlock.add(reportMessage);
+        reportBlock.add(reportPane);
+        add(reportBlock);
 
         quitAndReturnButton();
     }
 
     //MODIFIES: this
-    //EFFECTS: constructs add/remove medication button as well as a view medication button
+    //EFFECTS: constructs add/remove medication button as well as a view medication button and adds functionality
     public void setUpMedButtons() {
         this.viewMedicationButton = new JButton("View Medication");
         this.addMedicationButton = new JButton("Add Medication");
@@ -41,9 +54,13 @@ public class ReportTabMeds extends Tab {
         this.add(viewMedicationButton);
         this.add(addMedicationButton);
         this.add(removeMedicationButton);
+        setViewFunction();
+        setAddFunction();
+        setRemoveFunction();
     }
 
-    //EFFECTS: constructs a save and return button
+    //MODIFIES: this
+    //EFFECTS: constructs a save and return button then adds functionality to them
     public void quitAndReturnButton() {
         JPanel statusBlock = new JPanel();
         this.returnButton = new JButton("Return");
@@ -52,12 +69,12 @@ public class ReportTabMeds extends Tab {
         statusBlock.add(saveButton, BorderLayout.WEST);
 
         this.add(statusBlock);
-        returnButtonFunction();
-        saveButtonFunction();
+        setReturnFunction();
+        setSaveFunction();
     }
 
-    //EFFECTS: saves the changes in the database when save button is clicked
-    public void saveButtonFunction() {
+    //EFFECTS: when save button is clicked, saves the changes in the database
+    public void setSaveFunction() {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,15 +86,58 @@ public class ReportTabMeds extends Tab {
         });
     }
 
-    //EFFECTS: returns to the settings page when return button is pressed
-    private void returnButtonFunction() {
+    //EFFECTS: when view button is clicked, display the all medication in the database in the text area
+    public void setViewFunction() {
+        viewMedicationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("View Medication")) {
+                    String message = "View of all current medication in the system:";
+                    reportMessage.setText(message);
+                    String meds = getController().retrieveMedication();
+                    reportText.setText(meds);
+                    reportPane.setViewportView(reportText);
+                }
+            }
+        });
+    }
+
+    //EFFECTS: when remove button is clicked, switch tabs to the medication modifier page
+    public void setRemoveFunction() {
+        removeMedicationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Remove Medication")) {
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.medicationModifierTabIndex);
+                }
+            }
+        });
+    }
+
+    //EFFECTS: when add button is clicked, switch tabs to the medication modifier page
+    public void setAddFunction() {
+        addMedicationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Add Medication")) {
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.medicationModifierTabIndex);
+                }
+            }
+        });
+    }
+
+    //EFFECTS: when return button is pressed, returns to the settings page
+    private void setReturnFunction() {
 
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Return")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.SETTINGS_TAB_INDEX);
+                    getController().getTabbedPane().setSelectedIndex(SmartHospital.settingsTabIndex);
                 }
             }
         });
