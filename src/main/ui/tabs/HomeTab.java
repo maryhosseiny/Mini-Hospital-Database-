@@ -30,7 +30,7 @@ public class HomeTab extends Tab {
         setProceedButton();
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, initGreeting, optionGreeting, returnGreeting, saveGreeting
     //EFFECTS: creates greeting and places them on the frame
     private void setGreetings() {
         initGreeting = new JLabel(INIT_GREETING);
@@ -48,7 +48,7 @@ public class HomeTab extends Tab {
         add(saveGreeting);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, icon
     //EFFECTS: uploads this is fine image onto the frame
     private void setThisIsFineImage() {
         icon = new JLabel();
@@ -58,7 +58,7 @@ public class HomeTab extends Tab {
         add(icon);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, statusBlock
     //EFFECTS: constructs a proceed button that switches to the settings tab
     private void setProceedButton() {
         JPanel statusBlock = new JPanel();

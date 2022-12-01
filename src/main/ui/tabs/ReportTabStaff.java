@@ -7,19 +7,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Represents staff viewing page where the user can see the physicians and nurses in the database as well as
+//            being able to return to the settings page
 public class ReportTabStaff extends Tab {
-
-    private static final String physicianButton = "View physicians";
-    private static final String nurseButton = "View nurses";
 
     private JScrollPane reportPane;
     private JTextArea reportText;
     private JLabel reportMessage;
 
-    JButton nursesButton;
-    JButton physiciansButton;
-    JButton returnButton;
-    JButton saveButton;
+    private JButton nursesButton;
+    private JButton physiciansButton;
+    private JButton returnButton;
 
     //EFFECTS: constructs staff tab with 2 buttons (nurses and physicians) along with a text area
     //         to view the nurses/physicians in the database as well as a return button to go back
@@ -35,7 +33,7 @@ public class ReportTabStaff extends Tab {
         setNurseFunction();
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, nursesButton, physiciansButton
     //EFFECTS: constructs two buttons (nurses and physicians)
     public void setButtons() {
         this.nursesButton = new JButton("Nurses");
@@ -47,7 +45,7 @@ public class ReportTabStaff extends Tab {
         this.add(physiciansButton);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, reportText, reportBlock
     //EFFECTS: create a panel to view the nurses and physicians database
     public void setViewArea() {
         JPanel reportBlock = new JPanel(new GridLayout(2, 1));
@@ -63,7 +61,7 @@ public class ReportTabStaff extends Tab {
         add(reportBlock);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, statusBlock
     //EFFECTS: constructs a return button and adds functionality for it
     public void setReturnButton() {
         JPanel statusBlock = new JPanel();
@@ -74,6 +72,7 @@ public class ReportTabStaff extends Tab {
         setReturnFunction();
     }
 
+    //MODIFIES: this, physiciansButton, reportText, reportPane
     //EFFECTS: when view physicians button is pressed, displays all the physicians in the database in the text area
     public void setPhysicianFunction() {
         physiciansButton.addActionListener(new ActionListener() {
@@ -87,11 +86,11 @@ public class ReportTabStaff extends Tab {
                     reportText.setText(physicians);
                     reportPane.setViewportView(reportText);
                 }
-
             }
         });
     }
 
+    //MODIFIES: this, nursesButton, reportText, reportPane
     //EFFECTS: when view nurses button is pressed, displays all the nurses in the database in the text area
     public void setNurseFunction() {
         nursesButton.addActionListener(new ActionListener() {
@@ -105,15 +104,14 @@ public class ReportTabStaff extends Tab {
                     reportText.setText(nurses);
                     reportPane.setViewportView(reportText);
                 }
-
             }
         });
 
     }
 
+    //MODIFIES: returnButton
     //EFFECTS: constructs a return button that switches to the settings tab
     private void setReturnFunction() {
-
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -7,11 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 
 // The code below is taken and modified from the SmartHome project in LongFormProblemStarter file
+// An abstract class that creates a tab from a SmartHospital with buttons
 public abstract class Tab extends JPanel {
 
     public final SmartHospital controller;
 
-    //REQUIRES: SmartHomeUI controller that holds this tab
+    //REQUIRES: SmartHospital controller that holds this tab
     public Tab(SmartHospital controller) {
         this.controller = controller;
     }

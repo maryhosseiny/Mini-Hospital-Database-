@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Represents a patient viewing tab where the user can view normal or discharged patients as well as return to
+//            the setting page or switch to the patient modifier tab
 public class ReportTabPatients extends Tab {
     private JButton viewPatientButton;
     private JButton addPatientButton;
@@ -37,6 +39,7 @@ public class ReportTabPatients extends Tab {
         setReturnButton();
     }
 
+    //MODIFIES: this, viewPatientButton, addPatientButton, removePatientButton, viewDischargedPatientButton
     //EFFECTS: constructs view patients and discharge patients button and add/remove button then adds functionality
     //         for them
     public void setButtons() {
@@ -61,6 +64,7 @@ public class ReportTabPatients extends Tab {
         patientDisActionButton();
     }
 
+    //MODIFIES: this, statusBlock
     //EFFECTS: constructs a return button and places it in the frame then adds functionality to it
     public void setReturnButton() {
         JPanel statusBlock = new JPanel();
@@ -71,6 +75,7 @@ public class ReportTabPatients extends Tab {
         setReturnFunction();
     }
 
+    //MODIFIES: returnButton
     //EFFECTS: when return button is pressed, switches the frame to the settings tab
     private void setReturnFunction() {
         returnButton.addActionListener(new ActionListener() {
@@ -84,6 +89,7 @@ public class ReportTabPatients extends Tab {
         });
     }
 
+    //MODIFIES: this (change in the appearance of the tab), viewPatientButton, reportText, reportPane
     //EFFECTS: when view patients button is pressed, a list of patients in the database
     public void setViewPatFunction() {
         viewPatientButton.addActionListener(new ActionListener() {
@@ -97,11 +103,11 @@ public class ReportTabPatients extends Tab {
                     reportText.setText(physicians);
                     reportPane.setViewportView(reportText);
                 }
-
             }
         });
     }
 
+    //MODIFIES: removePatientButton
     //EFFECTS: when remove patient button is clicked, switches to patient modifier tab
     public void patientRemoveActionButton() {
         removePatientButton.addActionListener(new ActionListener() {
@@ -115,6 +121,7 @@ public class ReportTabPatients extends Tab {
         });
     }
 
+    //MODIFIES: addPatientButton
     //EFFECTS: when add patient button is clicked, switches to patient modifier tab
     public void patientAddActionButton() {
         addPatientButton.addActionListener(new ActionListener() {
@@ -128,6 +135,7 @@ public class ReportTabPatients extends Tab {
         });
     }
 
+    //MODIFIES: this (change in the appearance of the tab), viewDischargedPatientButton, reportText, reportPane
     //EFFECTS: when view discharged patients button is pressed, displays a list of discharged patients in the database
     public void patientDisActionButton() {
         viewDischargedPatientButton.addActionListener(new ActionListener() {

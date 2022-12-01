@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Represents a settings tab with three buttons for the user to press to take them to the medication, staff
+//           or patients part of the database as well as buttons to quit the program and load the previous
+//           database
 public class SettingsTab extends Tab {
     private JButton viewPatientsButton;
     private JButton viewMedicationButton;
@@ -25,7 +28,7 @@ public class SettingsTab extends Tab {
         setLoadAndQuitButton();
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, viewStaffButton, viewPatientsButton, viewMedicationButton
     //EFFECTS: constructs the patient, medication and staff database buttons and adds functionality to them
     public void setButtons() {
         viewPatientsButton = new JButton("Patient Database");
@@ -42,6 +45,7 @@ public class SettingsTab extends Tab {
         setMedicationButton();
     }
 
+    //MODIFIES: viewPatientsButton
     //EFFECTS: switches to patients database tab when patient button is pressed
     private void setPatientButton() {
         viewPatientsButton.addActionListener(new ActionListener() {
@@ -55,6 +59,7 @@ public class SettingsTab extends Tab {
         });
     }
 
+    //MODIFIES: viewMedicationButton
     //EFFECTS: switches to medication database tab when medication button is pressed
     private void setMedicationButton() {
         viewMedicationButton.addActionListener(new ActionListener() {
@@ -68,6 +73,7 @@ public class SettingsTab extends Tab {
         });
     }
 
+    //MODIFIES: viewStaffButton
     //EFFECTS: switches to the staff database tab when the staff database button is clicked
     private void setStaffButton() {
         viewStaffButton.addActionListener(new ActionListener() {
@@ -81,6 +87,7 @@ public class SettingsTab extends Tab {
         });
     }
 
+    //MODIFIES: this, statusBlock
     //EFFECTS: constructs a quit and load buttons and adds functionality to them
     private void setLoadAndQuitButton() {
         statusBlock = new JPanel();
@@ -93,6 +100,7 @@ public class SettingsTab extends Tab {
         setQuitFunction();
     }
 
+    //MODIFIES: loadButton
     //EFFECTS: when load button is pressed, loads the previous file onto the database
     private void setLoadFunction() {
         loadButton.addActionListener(new ActionListener() {
@@ -106,6 +114,7 @@ public class SettingsTab extends Tab {
         });
     }
 
+    //MODIFIES: quitButton
     //EFFECTS: when quit button is pressed, it will save the file and quit the program
     private void setQuitFunction() {
         quitButton.addActionListener(new ActionListener() {
@@ -113,7 +122,6 @@ public class SettingsTab extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Quit")) {
-                    getController().saveHospital();
                     System.exit(0);
                 }
             }

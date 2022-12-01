@@ -17,12 +17,12 @@ public class Patient implements Writable {
     // EFFECTS: creates a patient with its name set to name, age set to age, its personal
     //          health number set to personalHealthNumber, discharge status being false,
     //          and the patient room number set to roomNum
-    public Patient(String name, int age, int personalHealthNumber, boolean dischargeStatus, int roomNum) {
+    public Patient(String name, int age, int personalHealthNumber, boolean status, int room) {
         this.name = name;
         this.age = age;
         this.personalHealthNumber = personalHealthNumber;
-        this.dischargeStatus = dischargeStatus;
-        this.roomNum = roomNum;
+        this.dischargeStatus = status;
+        this.roomNum = room;
     }
 
     // MODIFIES: this

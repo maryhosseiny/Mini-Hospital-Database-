@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Represents a medication viewing tab where the user can view the current medication in the system, as well
+//           as accessing buttons where the user can return to the settings page, saving the state of the
+//           database and accessing add/removing medication tab
 public class ReportTabMeds extends Tab {
 
     private JButton viewMedicationButton;
@@ -40,7 +43,7 @@ public class ReportTabMeds extends Tab {
         quitAndReturnButton();
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, viewMedicationButton, addMedicationButton, removeMedicationButton
     //EFFECTS: constructs add/remove medication button as well as a view medication button and adds functionality
     public void setUpMedButtons() {
         this.viewMedicationButton = new JButton("View Medication");
@@ -59,7 +62,7 @@ public class ReportTabMeds extends Tab {
         setRemoveFunction();
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, statusBlock
     //EFFECTS: constructs a save and return button then adds functionality to them
     public void quitAndReturnButton() {
         JPanel statusBlock = new JPanel();
@@ -73,6 +76,7 @@ public class ReportTabMeds extends Tab {
         setSaveFunction();
     }
 
+    //MODIFIES: SmartHospital (saving changes in the database)
     //EFFECTS: when save button is clicked, saves the changes in the database
     public void setSaveFunction() {
         saveButton.addActionListener(new ActionListener() {
@@ -86,6 +90,7 @@ public class ReportTabMeds extends Tab {
         });
     }
 
+    //MODIFIES: this, reportPane, reportText, viewMedicationButton
     //EFFECTS: when view button is clicked, display the all medication in the database in the text area
     public void setViewFunction() {
         viewMedicationButton.addActionListener(new ActionListener() {
@@ -103,6 +108,7 @@ public class ReportTabMeds extends Tab {
         });
     }
 
+    //MODIFIES: removeMedicationButton
     //EFFECTS: when remove button is clicked, switch tabs to the medication modifier page
     public void setRemoveFunction() {
         removeMedicationButton.addActionListener(new ActionListener() {
@@ -116,6 +122,7 @@ public class ReportTabMeds extends Tab {
         });
     }
 
+    //MODIFIES: addMedicationButton
     //EFFECTS: when add button is clicked, switch tabs to the medication modifier page
     public void setAddFunction() {
         addMedicationButton.addActionListener(new ActionListener() {
@@ -129,9 +136,9 @@ public class ReportTabMeds extends Tab {
         });
     }
 
+    //MODIFIES: returnButton
     //EFFECTS: when return button is pressed, returns to the settings page
     private void setReturnFunction() {
-
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

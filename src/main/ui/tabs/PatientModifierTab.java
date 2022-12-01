@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 
+// Represents the patients modifier tab that includes buttons to add/remove patients from the
+//           database as well as saving the new changes and returning to the setting menu
 public class PatientModifierTab extends Tab {
     private JButton returnButton;
     private JButton saveButton;
@@ -61,7 +63,7 @@ public class PatientModifierTab extends Tab {
         revalidate();
     }
 
-    //MODIFIES: this
+    //MODIFIES: this (change the appearance of the tab/controller hence this), reportBlockTitle
     //EFFECTS: sets up the into at the top of the page for user direction
     public void setUpIntro() {
         reportBlockTitle = new JPanel(new GridLayout(1, 1));
@@ -71,7 +73,7 @@ public class PatientModifierTab extends Tab {
         add(reportBlockTitle);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, reportBlockName, reportTextName
     //EFFECTS: sets up a text area along with a text label for patient name for user input
     public void setPatientNameArea() {
         reportBlockName = new JPanel(new GridLayout(3, 1));
@@ -84,7 +86,7 @@ public class PatientModifierTab extends Tab {
         add(reportBlockName);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, reportBlockAge, reportTextAge
     //EFFECTS: sets up a text area along with a text label for patient age for user input
     public void setPatientAgeArea() {
         reportBlockAge = new JPanel(new GridLayout(3, 1));
@@ -97,7 +99,7 @@ public class PatientModifierTab extends Tab {
         add(reportBlockAge);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, reportBlockPhn, reportTextPhn
     //EFFECTS: sets up a text area along with a text label for patient phn for user input
     public void setPatientPhnArea() {
         reportBlockPhn = new JPanel(new GridLayout(3, 1));
@@ -110,7 +112,7 @@ public class PatientModifierTab extends Tab {
         add(reportBlockPhn);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, reportBlockStatus, reportTextStatus
     //EFFECTS: sets up a text area along with a text label for patient status for user input
     public void setPatientStatusArea() {
         reportBlockStatus = new JPanel(new GridLayout(3, 1));
@@ -123,7 +125,7 @@ public class PatientModifierTab extends Tab {
         add(reportBlockStatus);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, reportBlockRoom,reportTextRoom
     //EFFECTS: sets up a text area along with a text label for patient room number for user input
     public void setPatientRoomArea() {
         reportBlockRoom = new JPanel(new GridLayout(3, 1));
@@ -136,6 +138,7 @@ public class PatientModifierTab extends Tab {
         add(reportBlockRoom);
     }
 
+    //MODIFIES: this, reportText, reportBlock
     //EFFECTS: create a panel to view the updated database and adds functionality to it
     public void setUpViewArea() {
         JPanel reportBlock = new JPanel(new GridLayout(0, 1));
@@ -151,7 +154,7 @@ public class PatientModifierTab extends Tab {
         setViewFunction();
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, statusBlock, returnButton, saveButton, removeButton, addButton, viewPatientButton
     //EFFECTS: constructs a status panel with five buttons(return, add, remove, save, view) then adds
     //         functionality to them
     public void setButtons() {
@@ -178,6 +181,7 @@ public class PatientModifierTab extends Tab {
         setUpViewArea();
     }
 
+    //MODIFIES: this (change in the tab), returnButton
     //EFFECTS: constructs a return button that switches to the settings tab
     private void setReturnFunction() {
 
@@ -192,7 +196,7 @@ public class PatientModifierTab extends Tab {
         });
     }
 
-    //MODIFIES: this
+    //MODIFIES: SmartHospital (change in the database), saveButton
     //EFFECTS: saves the new hospital status to include the new changes
     public void setSaveFunction() {
         saveButton.addActionListener(new ActionListener() {
@@ -206,7 +210,7 @@ public class PatientModifierTab extends Tab {
         });
     }
 
-    //MODIFIES: this
+    //MODIFIES: this (change in the tab), SmartHospital (change in the database), removeButton
     //EFFECTS: removes a patient from the patient database when user inputs info and clicks remove button
     public void setRemoveFunction() {
         removeButton.addActionListener(new ActionListener() {
@@ -225,7 +229,7 @@ public class PatientModifierTab extends Tab {
         });
     }
 
-    //MODIFIES: this
+    //MODIFIES: this (change in the tab), SmartHospital (change in the database), addButton
     //EFFECTS: adds a patients to the patient database when user inputs patient info and clicks add button
     public void setAddFunction() {
         addButton.addActionListener(new ActionListener() {
@@ -244,6 +248,7 @@ public class PatientModifierTab extends Tab {
         });
     }
 
+    //MODIFIES: this (change in the tab), viewPatientButton, reportPane, reportText
     //EFFECTS: when view patients button is pressed, displays a list of current medication in the database
     public void setViewFunction() {
         viewPatientButton.addActionListener(new ActionListener() {
@@ -257,7 +262,6 @@ public class PatientModifierTab extends Tab {
                     reportText.setText(patients);
                     reportPane.setViewportView(reportText);
                 }
-
             }
         });
     }

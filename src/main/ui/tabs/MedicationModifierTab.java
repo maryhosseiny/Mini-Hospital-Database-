@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 
 import static java.lang.Integer.parseInt;
 
+// Represents the medication modifier tab that includes buttons to add/remove medication from the
+//           database as well as saving the new changes and returning to the setting menu
 public class MedicationModifierTab extends Tab {
     private JButton returnButton;
     private JButton saveButton;
@@ -51,7 +53,7 @@ public class MedicationModifierTab extends Tab {
         revalidate();
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, reportBlockTitle
     //EFFECTS: sets up the into at the top of the page for user direction
     public void setIntro() {
         reportBlockTitle = new JPanel(new GridLayout(1, 1));
@@ -61,7 +63,7 @@ public class MedicationModifierTab extends Tab {
         add(reportBlockTitle);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, statusBlock, returnButton, saveButton, removeButton, addButton, viewMedsButton
     //EFFECTS: constructs a status panel with four buttons (return, add, remove, save) and adds functionality to them
     public void setButtons() {
         JPanel statusBlock = new JPanel();
@@ -87,7 +89,7 @@ public class MedicationModifierTab extends Tab {
         setUpViewArea();
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, reportTextName, reportBlockName
     //EFFECTS: sets up a text area along with a text label for medication name for user input
     public void setMedNameArea() {
         reportBlockName = new JPanel(new GridLayout(2, 4));
@@ -100,7 +102,7 @@ public class MedicationModifierTab extends Tab {
         add(reportBlockName);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, reportTextSerialNum, reportBlockSerialNum
     //EFFECTS: sets up a text area along with a text label for medication serial number for user input
     public void setSerialNumArea() {
         reportBlockSerialNum = new JPanel(new GridLayout(2, 3));
@@ -113,7 +115,7 @@ public class MedicationModifierTab extends Tab {
         add(reportBlockSerialNum);
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, reportTextBrand, reportBlockBrand
     //EFFECTS: sets up a text area along with a text label for medication brand name for user input
     public void setMedBrandArea() {
         reportBlockBrand = new JPanel(new GridLayout(2, 2));
@@ -126,6 +128,7 @@ public class MedicationModifierTab extends Tab {
         add(reportBlockBrand);
     }
 
+    //MODIFIES: this, reportText, reportBlock
     //EFFECTS: create a panel to view the updated database and adds functionality for it
     public void setUpViewArea() {
         JPanel reportBlock = new JPanel(new GridLayout(0, 1));
@@ -141,9 +144,9 @@ public class MedicationModifierTab extends Tab {
         setViewFunction();
     }
 
+    //MODIFIES: this (change in the tab), returnButton
     //EFFECTS: when return button is clicked, switches to the settings tab on the console
     private void setReturnFunction() {
-
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -155,7 +158,7 @@ public class MedicationModifierTab extends Tab {
         });
     }
 
-    //MODIFIES: this
+    //MODIFIES: SmartHospital (change in database), saveButton
     //EFFECTS: when save button is clicked, it saves the new hospital status to include the new changes
     public void setSaveFunction() {
         saveButton.addActionListener(new ActionListener() {
@@ -169,7 +172,7 @@ public class MedicationModifierTab extends Tab {
         });
     }
 
-    //MODIFIES: this
+    //MODIFIES: this (change in the tab), SmartHospital (change in database), removeButton
     //EFFECTS: when remove button is clicked, removes a medication from the medication database from user inputs
     public void setRemoveFunction() {
         removeButton.addActionListener(new ActionListener() {
@@ -186,7 +189,7 @@ public class MedicationModifierTab extends Tab {
         });
     }
 
-    //MODIFIES: this
+    //MODIFIES: this (change in the tab), SmartHospital (change in database), addButton
     //EFFECTS: when add button is clicked, adds a medication from the medication database from user inputs
     public void addButtonFunction() {
         addButton.addActionListener(new ActionListener() {
@@ -203,6 +206,7 @@ public class MedicationModifierTab extends Tab {
         });
     }
 
+    //MODIFIES: this (change in the tab), viewMedsButton, reportPane, reportText
     //EFFECTS: when view medication button is pressed, displays a list of current medication in the database
     public void setViewFunction() {
         viewMedsButton.addActionListener(new ActionListener() {
@@ -216,7 +220,6 @@ public class MedicationModifierTab extends Tab {
                     reportText.setText(meds);
                     reportPane.setViewportView(reportText);
                 }
-
             }
         });
     }

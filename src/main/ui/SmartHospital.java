@@ -1,15 +1,20 @@
 package ui;
 
+import model.Event;
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.tabs.*;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 
+// Represents a SmartHospital database with patient, medication and staff databases where the user can access
+//            six different tabs to modify/view these databases
 public class SmartHospital extends JFrame {
     public static final int homeTabIndex = 0;
     public static final int settingsTabIndex = 1;
@@ -18,8 +23,6 @@ public class SmartHospital extends JFrame {
     public static final int patientTabIndex = 4;
     public static final int patientModifierTabIndex = 5;
     public static final int medicationModifierTabIndex = 6;
-    private static int max = 100;
-    private static int min = 4;
 
     private static final String JSON_STORE = "./data/hospital.json";
     private JsonWriter jsonWriter;
@@ -29,29 +32,28 @@ public class SmartHospital extends JFrame {
     public static final int HEIGHT = 800;
     private JTabbedPane sidebar;
     private Hospital hospital;
+    private JFrame frame;
 
-    private Physician physicianOne = new Physician(1234, "Danny");
-    private Physician physicianTwo = new Physician(4567, "Tana");
-    private Physician physicianThree = new Physician(7890, "Sara");
-    private Physician physicianFour = new Physician(1212, "Peppa");
-    private Patient patOne = new Patient("Ella", 20, 234111,false, 1);
-    private Patient patTwo = new Patient("Bam", 45, 111999, false,2);
-    private Patient patThree = new Patient("Sam", 36, 818181, false, 3);
-    private Nurse nurseOne = new Nurse(4444, "Lena");
-    private Nurse nurseTwo = new Nurse(3333, "Maya");
-    private Nurse nurseThree = new Nurse(3330, "Miya");
-    private Medication medicationOne = new Medication("Acetaminophen", 123456, "Kirkland");
-    private Medication medicationTwo = new Medication("Amoxicillin", 123678, "Trimox");
-    private Medication medicationThree = new Medication("Levothyroxine", 456789, "Synthyroid");
+    private final Physician physicianOne = new Physician(1234, "Danny");
+    private final Physician physicianTwo = new Physician(4567, "Tana");
+    private final Physician physicianThree = new Physician(7890, "Sara");
+    private final Physician physicianFour = new Physician(1212, "Peppa");
+    private final Patient patOne = new Patient("Ella", 20, 234111,false, 1);
+    private final Patient patTwo = new Patient("Bam", 45, 111999, false,2);
+    private final Patient patThree = new Patient("Sam", 36, 818181, false, 3);
+    private final Nurse nurseOne = new Nurse(4444, "Lena");
+    private final Nurse nurseTwo = new Nurse(3333, "Maya");
+    private final Nurse nurseThree = new Nurse(3330, "Miya");
+    private final Medication medOne = new Medication("Acetaminophen", 123456, "Kirkland");
+    private final Medication medTwo = new Medication("Amoxicillin", 123678, "Trimox");
+    private final Medication medThree = new Medication("Levothyroxine", 456789, "Synthyroid");
 
-    //MODIFIES: this
     //EFFECTS: creates SmartHospital, loads Hospital, displays sidebar and tabs
     public SmartHospital() throws FileNotFoundException {
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setVisible(true);
         frame.setTitle("SmartHospital Console");
         frame.setSize(WIDTH, HEIGHT);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         sidebar = new JTabbedPane();
         sidebar.setTabPlacement(JTabbedPane.LEFT);
         frame.add(sidebar);
@@ -60,9 +62,30 @@ public class SmartHospital extends JFrame {
         this.hospital = new Hospital();
         init();
         loadTabs();
+        printToConsole();
     }
 
-    // MODIFIES: this
+    //MODIFIES: this, frame
+    //EFFECTS: once the window is closed, initializes an EventLog to print on console
+    //         then exits the system
+    public void printToConsole() {
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                printEventToConsole(EventLog.getInstance());
+                System.exit(0);
+            }
+        });
+    }
+
+    //EFFECTS: uses a for loop on each event in the EventLog then prints out each event
+    public void printEventToConsole(EventLog eventLog) {
+        for (Event e : eventLog) {
+            System.out.println(e.toString() + "\n");
+        }
+    }
+
+    // MODIFIES: this, hospital, patOne
     // EFFECTS: initializes hospital
     public void init() {
         hospital.addPatient(patOne);
@@ -71,9 +94,9 @@ public class SmartHospital extends JFrame {
         hospital.addNurse(nurseOne);
         hospital.addNurse(nurseTwo);
         hospital.addNurse(nurseThree);
-        hospital.addMedication(medicationOne);
-        hospital.addMedication(medicationTwo);
-        hospital.addMedication(medicationThree);
+        hospital.addMedication(medOne);
+        hospital.addMedication(medTwo);
+        hospital.addMedication(medThree);
         hospital.addPhysician(physicianOne);
         hospital.addPhysician(physicianTwo);
         hospital.addPhysician(physicianThree);
@@ -81,7 +104,7 @@ public class SmartHospital extends JFrame {
         patOne.patientDischarged();
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, sidebar
     //EFFECTS: adds home tab, settings tab and report tabs to this UI
     private void loadTabs() {
         JPanel homeTab = new HomeTab(this);
@@ -94,16 +117,22 @@ public class SmartHospital extends JFrame {
 
         sidebar.add(homeTab, homeTabIndex);
         sidebar.setTitleAt(homeTabIndex, "Greetings");
+
         sidebar.add(settingsTab, settingsTabIndex);
         sidebar.setTitleAt(settingsTabIndex, "Main Menu");
+
         sidebar.add(staffTab, staffTabIndex);
         sidebar.setTitleAt(staffTabIndex, "Staff Menu");
+
         sidebar.add(medTab, medicationTabIndex);
         sidebar.setTitleAt(medicationTabIndex, "Medication Menu");
+
         sidebar.add(patTab, patientTabIndex);
         sidebar.setTitleAt(patientTabIndex, "Patients Menu");
+
         sidebar.add(patRemoveTab, patientModifierTabIndex);
         sidebar.setTitleAt(patientModifierTabIndex, "Patient List Modifier");
+
         sidebar.add(medRemoveTab, medicationModifierTabIndex);
         sidebar.setTitleAt(medicationModifierTabIndex, "Medication List Modifier");
     }
@@ -118,6 +147,7 @@ public class SmartHospital extends JFrame {
         return sidebar;
     }
 
+    //MODIFIES: jsonWriter
     // EFFECTS: saves the database to file
     public void saveHospital() {
         try {
@@ -130,7 +160,6 @@ public class SmartHospital extends JFrame {
         }
     }
 
-    // MODIFIES: this
     // EFFECTS: loads database from file
     public void loadHospital() {
         try {
@@ -141,7 +170,7 @@ public class SmartHospital extends JFrame {
     }
 
     // REQUIRES: the inputted patient must not be in the hospital database
-    // MODIFIES: this
+    // MODIFIES: this, Hospital
     // EFFECTS: adds a patient to the hospital patient database
     public void addPatient(String name, int age, int phn, Boolean dischargeStatus, int roomNum) {
         Patient newPatient = new Patient(name, age, phn, dischargeStatus, roomNum);
@@ -149,7 +178,7 @@ public class SmartHospital extends JFrame {
     }
 
     // REQUIRES: the inputted patient must be in the hospital database
-    // MODIFIES: this
+    // MODIFIES: this, Hospital
     // EFFECTS: removes a patient from the hospital patient database
     public void removePatient(String name, int age, int phn, Boolean dischargeStatus, int roomNum) {
         LinkedList<Patient> patients = hospital.getPatients();
@@ -163,7 +192,7 @@ public class SmartHospital extends JFrame {
     }
 
     // REQUIRES: the inputted medication must not be in the hospital database
-    // MODIFIES: this
+    // MODIFIES: this, Hospital
     // EFFECTS: adds a medication to the hospital medication database
     public void addMedication(String name, int serialNum, String brand) {
         Medication newMed = new Medication(name, serialNum, brand);
@@ -171,7 +200,7 @@ public class SmartHospital extends JFrame {
     }
 
     // REQUIRES: the inputted medication must be in the hospital database
-    // MODIFIES: this
+    // MODIFIES: this, Hospital
     // EFFECTS: removes a medication form the hospital medication database
     public void removeMedication(String name, String brand, int serialNum) {
         LinkedList<Medication> medicationList = hospital.getMedication();

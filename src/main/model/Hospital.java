@@ -92,59 +92,67 @@ public class Hospital implements Writable {
     }
 
     // REQUIRES: inputted physician must not be present in the list of physicians
-    // MODIFIES: this
+    // MODIFIES: this, physicians
     // EFFECTS: adds a physician to the list of physicians
     public void addPhysician(Physician doctor) {
         physicians.add(doctor);
+        EventLog.getInstance().logEvent(new Event("New physician added."));
     }
 
     // REQUIRES: inputted patient must not be present in the list of patients
-    // MODIFIES: this
+    // MODIFIES: this, patients
     // EFFECTS: adds a patient to the list of patients
     public void addPatient(Patient patient) {
         patients.add(patient);
+        EventLog.getInstance().logEvent(new Event("New patient added."));
     }
 
     // REQUIRES: inputted nurse must not be present in the list of nurses
-    // MODIFIES: this
+    // MODIFIES: this, nurses
     // EFFECTS: adds a nurse to the list of nurses
     public void addNurse(Nurse nurse) {
         nurses.add(nurse);
+        EventLog.getInstance().logEvent(new Event("New nurse added."));
     }
 
     // REQUIRES: inputted medication must not be present in the list of medications
-    // MODIFIES: this
+    // MODIFIES: this, medications
     // EFFECTS: adds a medication to the list of medications
     public void addMedication(Medication medication) {
         medications.add(medication);
+        EventLog.getInstance().logEvent(new Event("New medication added."));
     }
 
     // REQUIRES: inputted physician must be present in the list of physicians
-    // MODIFIES: this
+    // MODIFIES: this, physicians
     // EFFECTS: removes a physician to the list of physicians
     public void removePhysician(Physician doctor) {
         physicians.remove(doctor);
+        EventLog.getInstance().logEvent(new Event("Inputted physician removed."));
     }
 
     // REQUIRES: inputted patient must be present in the list of patients
-    // MODIFIES: this
+    // MODIFIES: this, patients
     // EFFECTS: removes a patient to the list of patients
     public void removePatient(Patient patient) {
         patients.remove(patient);
+        EventLog.getInstance().logEvent(new Event("Inputted patient removed."));
     }
 
     // REQUIRES: inputted nurse must be present in the list of nurses
-    // MODIFIES: this
+    // MODIFIES: this, nurses
     // EFFECTS: removes a nurse to the list of nurses
     public void removeNurse(Nurse nurse) {
         nurses.remove(nurse);
+        EventLog.getInstance().logEvent(new Event("Inputted nurse removed."));
     }
 
     // REQUIRES: inputted medication must be present in the list of medications
-    // MODIFIES: this
+    // MODIFIES: this, medications
     // EFFECTS: removes a medication to the list of medications
     public void removeMedication(Medication medication) {
         medications.remove(medication);
+        EventLog.getInstance().logEvent(new Event("Inputted physician removed."));
     }
 
     // getters
