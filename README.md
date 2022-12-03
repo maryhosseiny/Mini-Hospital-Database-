@@ -64,10 +64,10 @@ hospital and adding all the databases in place (this includes the addition of st
 medication and patients to the hospital), the event log is cleared. This is 
 so that the user will have an easier time tracking the changes they have made to the 
 system. Hence, the example below will first have a date along with a time followed by an
-"Event log cleared." After which any changes made by the user 
-to the database is logged then displayed once the program closes. This can be seen in 
+"Event log cleared." After which any changes made by the user to the database is logged. 
+Keep in mind that these events will ONLY be displayed once the program closes. This can be seen in 
 the third and forth line of the example, where time and date are shown and are followed 
-by the "New patient added."
+by the "New patient added." where we can see that the user added a new patient to the database.
 
 ### Example Event Logging: 
 
@@ -79,3 +79,14 @@ Fri Dec 02 19:19:09 PST 2022
 
 New patient added.
 
+## Phase 4: Task 3
+
+Note that some of the lines in the UML Design Diagram is in different colors so that it 
+is easier to see the location where the line is drawn to.
+
+An example of any refactoring that could improve the design would be to either delete the
+hospital employee interface or to improve it by taking off the list of patients field. 
+The project is implemented in a way so that the staff profile does not utilize the list
+of patients. This is mainly because each staff profile in the database gives information
+about the staff member themselves (eg. employee id and employee name). Hence I believe if 
+I had more time available, I would eliminate or improve the HospitalEmployee interface. 

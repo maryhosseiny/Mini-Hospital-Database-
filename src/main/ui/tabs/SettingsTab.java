@@ -14,7 +14,6 @@ public class SettingsTab extends Tab {
     private JButton viewPatientsButton;
     private JButton viewMedicationButton;
     private JButton viewStaffButton;
-    private JButton quitButton;
     private JButton loadButton;
     private JPanel statusBlock;
 
@@ -25,7 +24,7 @@ public class SettingsTab extends Tab {
         super(controller);
         setLayout(new GridLayout(7, 7));
         setButtons();
-        setLoadAndQuitButton();
+        setLoadButton();
     }
 
     //MODIFIES: this, viewStaffButton, viewPatientsButton, viewMedicationButton
@@ -89,15 +88,12 @@ public class SettingsTab extends Tab {
 
     //MODIFIES: this, statusBlock
     //EFFECTS: constructs a quit and load buttons and adds functionality to them
-    private void setLoadAndQuitButton() {
+    private void setLoadButton() {
         statusBlock = new JPanel();
         loadButton = new JButton("Load");
-        quitButton = new JButton("Quit");
-        statusBlock.add(quitButton, BorderLayout.WEST);
         statusBlock.add(loadButton, BorderLayout.EAST);
         this.add(statusBlock);
         setLoadFunction();
-        setQuitFunction();
     }
 
     //MODIFIES: loadButton
@@ -109,20 +105,6 @@ public class SettingsTab extends Tab {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Load")) {
                     getController().loadHospital();
-                }
-            }
-        });
-    }
-
-    //MODIFIES: quitButton
-    //EFFECTS: when quit button is pressed, it will save the file and quit the program
-    private void setQuitFunction() {
-        quitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String buttonPressed = e.getActionCommand();
-                if (buttonPressed.equals("Quit")) {
-                    System.exit(0);
                 }
             }
         });

@@ -17,13 +17,12 @@ import java.util.LinkedList;
 //            six different tabs to modify/view these databases
 public class SmartHospital extends JFrame {
     public static final int homeTabIndex = 0;
-    public static final int settingsTabIndex = 1;           //index issue, Index 1 out of bounds for length 1
-    public static final int staffTabIndex = 2;              //index issue, Index 2 out of bounds for length 2
-    public static final int medicationTabIndex = 3;         //index issue, Index 3 out of bounds for length 3
-    public static final int patientTabIndex = 4;            //index issue, Index 4 out of bounds for length 4
-    public static final int patientModifierTabIndex = 5;    //index issue, Index 5 out of bounds for length 5
-    public static final int medicationModifierTabIndex = 6; //index issue, Index 6 out of bounds for length 6
-
+    public static final int settingsTabIndex = 1;
+    public static final int staffTabIndex = 2;
+    public static final int medicationTabIndex = 3;
+    public static final int patientTabIndex = 4;
+    public static final int patientModifierTabIndex = 5;
+    public static final int medicationModifierTabIndex = 6;
     private static final String JSON_STORE = "./data/hospital.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -117,25 +116,25 @@ public class SmartHospital extends JFrame {
         JPanel medRemoveTab = new MedicationModifierTab(this);
 
         sidebar.add(homeTab, 0);
-        sidebar.setTitleAt(homeTabIndex, "Greetings");
+        sidebar.setTitleAt(0, "Greetings");
 
         sidebar.add(settingsTab, 1);
-        sidebar.setTitleAt(settingsTabIndex, "Main Menu");
+        sidebar.setTitleAt(1, "Main Menu");
 
         sidebar.add(staffTab, 2);
-        sidebar.setTitleAt(staffTabIndex, "Staff Menu");
+        sidebar.setTitleAt(2, "Staff Menu");
 
         sidebar.add(medTab, 3);
-        sidebar.setTitleAt(medicationTabIndex, "Medication Menu");
+        sidebar.setTitleAt(3, "Medication Menu");
 
         sidebar.add(patTab, 4);
-        sidebar.setTitleAt(patientTabIndex, "Patients Menu");
+        sidebar.setTitleAt(4, "Patients Menu");
 
         sidebar.add(patRemoveTab, 5);
-        sidebar.setTitleAt(patientModifierTabIndex, "Patient List Modifier");
+        sidebar.setTitleAt(5, "Patient List Modifier");
 
         sidebar.add(medRemoveTab, 6);
-        sidebar.setTitleAt(medicationModifierTabIndex, "Medication List Modifier");
+        sidebar.setTitleAt(6, "Medication List Modifier");
     }
 
     //EFFECTS: returns SmartHospital object controlled by this UI
