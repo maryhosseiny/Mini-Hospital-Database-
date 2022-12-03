@@ -59,6 +59,11 @@ provided in modifier tabs where a change in the system occurs. You can find thos
 in the main menu tab on the sidebar.
 
 ## Phase 4: Task 2
+
+Note that the Event and EventLog classes are both taken from the AlarmSystem application
+proved during class. Also note that both these classes are not edited due to the given
+instructions in phase 4.
+
 Below you will see an example of event logging in the project. After initializing the 
 hospital and adding all the databases in place (this includes the addition of staff, 
 medication and patients to the hospital), the event log is cleared. This is 
