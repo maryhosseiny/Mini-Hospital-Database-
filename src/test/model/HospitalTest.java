@@ -39,6 +39,7 @@ public class HospitalTest {
         testPatientOne = new Patient("Ella", 20, 234111, true, 1);
         testPatientTwo = new Patient("Bam", 45, 111999, false, 2 );
         testPatientThree = new Patient("Sam", 36, 818181, false, 3);
+        EventLog.getInstance().clear();
     }
 
     @Test
@@ -127,7 +128,7 @@ public class HospitalTest {
     }
 
     @Test
-    public void addNurse() {
+    public void testAddNurse() {
         assertEquals(testHospital.getNurses().size(), 0);
         testHospital.addNurse(testNurseTwo);
         assertEquals(testHospital.getNurses().size(), 1);
@@ -137,7 +138,7 @@ public class HospitalTest {
     }
 
     @Test
-    public void addMedication( ) {
+    public void testAddMedication( ) {
         assertEquals(testHospital.getMedication().size(), 0);
         testHospital.addMedication(testMedicationOne);
         assertEquals(testHospital.getMedication().size(), 1);
@@ -147,7 +148,7 @@ public class HospitalTest {
     }
 
     @Test
-    public void removePhysician() {
+    public void testRemovePhysician() {
         testHospital.addPhysician(testPhysicianThree);
         testHospital.addPhysician(testPhysicianTwo);
         assertEquals(testHospital.getPhysicians().size(), 2);
@@ -158,7 +159,7 @@ public class HospitalTest {
     }
 
     @Test
-    public void removePatient() {
+    public void testRemovePatient() {
         testHospital.addPatient(testPatientTwo);
         testHospital.addPatient(testPatientThree);
         assertEquals(testHospital.getPatients().size(), 2);
@@ -169,7 +170,7 @@ public class HospitalTest {
     }
 
     @Test
-    public void removeNurse() {
+    public void testRemoveNurse() {
         testHospital.addNurse(testNurseTwo);
         testHospital.addNurse(testNurseOne);
         assertEquals(testHospital.getNurses().size(), 2);
@@ -177,6 +178,17 @@ public class HospitalTest {
         assertEquals(testHospital.getNurses().size(), 1);
         testHospital.removeNurse(testNurseTwo);
         assertEquals(testHospital.getNurses().size(), 0);
+    }
+
+    @Test
+    public void testRemoveMedication() {
+        testHospital.addMedication(testMedicationThree);
+        testHospital.addMedication(testMedicationTwo);
+        assertEquals(testHospital.getMedication().size(), 2);
+        testHospital.removeMedication(testMedicationTwo);
+        assertEquals(testHospital.getMedication().size(), 1);
+        testHospital.removeMedication(testMedicationThree);
+        assertEquals(testHospital.getMedication().size(), 0);
     }
 
     @Test
@@ -191,13 +203,138 @@ public class HospitalTest {
     }
 
     @Test
-    public void removeMedication() {
+    public void testAddMedicationEvent( ) {
+        assertEquals(testHospital.getMedication().size(), 0);
+        testHospital.addMedication(testMedicationOne);
+        assertEquals(testHospital.getMedication().size(), 1);
+        testHospital.addMedication(testMedicationThree);
+        testHospital.addMedication(testMedicationTwo);
+        assertEquals(testHospital.getMedication().size(), 3);
+        String events = "";
+        String cleared = "Event log cleared.";
+        String addingMed = "New medication added.";
+        for (Event e : EventLog.getInstance()) {
+            events += e.getDescription();
+        }
+        assertEquals(events, cleared+addingMed+addingMed+addingMed);
+    }
+
+    @Test
+    public void testAddPhysicianEvent() {
+        assertEquals(testHospital.getPhysicians().size(), 0);
+        testHospital.addPhysician(testPhysicianFour);
+        assertEquals(testHospital.getPhysicians().size(), 1);
+        testHospital.addPhysician(testPhysicianThree);
+        testHospital.addPhysician(testPhysicianTwo);
+        assertEquals(testHospital.getPhysicians().size(), 3);
+        String events = "";
+        String cleared = "Event log cleared.";
+        String addingPhys = "New physician added.";
+        for (Event e : EventLog.getInstance()) {
+            events += e.getDescription();
+        }
+        assertEquals(events, cleared+addingPhys+addingPhys+addingPhys);
+    }
+
+    @Test
+    public void testAddPatientEvent() {
+        assertEquals(testHospital.getPatients().size(), 0);
+        testHospital.addPatient(testPatientOne);
+        assertEquals(testHospital.getPatients().size(), 1);
+        testHospital.addPatient(testPatientTwo);
+        testHospital.addPatient(testPatientThree);
+        assertEquals(testHospital.getPatients().size(), 3);
+        String events = "";
+        String cleared = "Event log cleared.";
+        String addingPatient = "New patient added.";
+        for (Event e : EventLog.getInstance()) {
+            events += e.getDescription();
+        }
+        assertEquals(events, cleared+addingPatient+addingPatient+addingPatient);
+    }
+
+    @Test
+    public void testAddNurseEvent() {
+        assertEquals(testHospital.getNurses().size(), 0);
+        testHospital.addNurse(testNurseTwo);
+        assertEquals(testHospital.getNurses().size(), 1);
+        testHospital.addNurse(testNurseOne);
+        testHospital.addNurse(testNurseThree);
+        assertEquals(testHospital.getNurses().size(), 3);
+        String events = "";
+        String cleared = "Event log cleared.";
+        String addingNurse = "New nurse added.";
+        for (Event e : EventLog.getInstance()) {
+            events += e.getDescription();
+        }
+        assertEquals(events, cleared+addingNurse+addingNurse+addingNurse);
+    }
+
+    @Test
+    public void testRemoveMedicationMultipleEvent() {
         testHospital.addMedication(testMedicationThree);
         testHospital.addMedication(testMedicationTwo);
         assertEquals(testHospital.getMedication().size(), 2);
         testHospital.removeMedication(testMedicationTwo);
         assertEquals(testHospital.getMedication().size(), 1);
-        testHospital.removeMedication(testMedicationThree);
-        assertEquals(testHospital.getMedication().size(), 0);
+        String events = "";
+        String cleared = "Event log cleared.";
+        String addingMed = "New medication added.";
+        String removeMed = "Inputted medication removed.";
+        for (Event e : EventLog.getInstance()) {
+            events += e.getDescription();
+        }
+        assertEquals(events, cleared+addingMed+addingMed+removeMed);
+    }
+
+    @Test
+    public void testRemovePhysicianEvent() {
+        testHospital.addPhysician(testPhysicianThree);
+        testHospital.addPhysician(testPhysicianTwo);
+        assertEquals(testHospital.getPhysicians().size(), 2);
+        testHospital.removePhysician(testPhysicianThree);
+        assertEquals(testHospital.getPhysicians().size(), 1);
+        String events = "";
+        String cleared = "Event log cleared.";
+        String addingPhys = "New physician added.";
+        String removingPhys = "Inputted physician removed.";
+        for (Event e : EventLog.getInstance()) {
+            events += e.getDescription();
+        }
+        assertEquals(events, cleared+addingPhys+addingPhys+removingPhys);
+    }
+
+    @Test
+    public void testRemovePatientEvent() {
+        testHospital.addPatient(testPatientTwo);
+        testHospital.addPatient(testPatientThree);
+        assertEquals(testHospital.getPatients().size(), 2);
+        testHospital.removePatient(testPatientThree);
+        assertEquals(testHospital.getPatients().size(), 1);
+        String events = "";
+        String cleared = "Event log cleared.";
+        String addingPatient = "New patient added.";
+        String removingPatient = "Inputted patient removed.";
+        for (Event e : EventLog.getInstance()) {
+            events += e.getDescription();
+        }
+        assertEquals(events, cleared+addingPatient+addingPatient+removingPatient);
+    }
+
+    @Test
+    public void testRemoveNurseEvent() {
+        testHospital.addNurse(testNurseTwo);
+        testHospital.addNurse(testNurseOne);
+        assertEquals(testHospital.getNurses().size(), 2);
+        testHospital.removeNurse(testNurseOne);
+        assertEquals(testHospital.getNurses().size(), 1);
+        String events = "";
+        String cleared = "Event log cleared.";
+        String addingNurse = "New nurse added.";
+        String removingNurse = "Inputted nurse removed.";
+        for (Event e : EventLog.getInstance()) {
+            events += e.getDescription();
+        }
+        assertEquals(events, cleared+addingNurse+addingNurse+removingNurse);
     }
 }

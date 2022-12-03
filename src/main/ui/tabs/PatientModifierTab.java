@@ -52,7 +52,7 @@ public class PatientModifierTab extends Tab {
     //         database with a text areas input info change the patient database
     public PatientModifierTab(SmartHospital controller) {
         super(controller);
-        setLayout(new GridLayout(9, 1));
+        setLayout(new GridLayout(11, 1));
         setUpIntro();
         setPatientNameArea();
         setPatientAgeArea();
@@ -141,13 +141,12 @@ public class PatientModifierTab extends Tab {
     //MODIFIES: this, reportText, reportBlock
     //EFFECTS: create a panel to view the updated database and adds functionality to it
     public void setUpViewArea() {
-        JPanel reportBlock = new JPanel(new GridLayout(0, 1));
-        reportBlock.setSize(WIDTH - (WIDTH / 5),HEIGHT - (HEIGHT / 5));
+        JPanel reportBlock = new JPanel(new GridLayout(3, 1));
+        reportBlock.setSize(WIDTH,HEIGHT);
         reportMessage = new JLabel("");
-        reportPane = new JScrollPane(new JTextArea(6, 40));
-        reportText = new JTextArea("", 6, 40);
+        reportPane = new JScrollPane(new JTextArea(3, 1));
+        reportText = new JTextArea("", 3, 1);
         reportText.setVisible(true);
-
         reportBlock.add(reportMessage);
         reportBlock.add(reportPane);
         add(reportBlock);

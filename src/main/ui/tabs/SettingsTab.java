@@ -23,7 +23,7 @@ public class SettingsTab extends Tab {
     //EFFECTS: constructs a setting tab for console with 3 menu buttons and 2 buttons for loading or quit the program
     public SettingsTab(SmartHospital controller) {
         super(controller);
-        setLayout(new GridLayout(7, 1));
+        setLayout(new GridLayout(7, 7));
         setButtons();
         setLoadAndQuitButton();
     }

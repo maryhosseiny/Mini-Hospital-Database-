@@ -29,11 +29,11 @@ public class ReportTabMeds extends Tab {
 
         setLayout(new GridLayout(7, 1));
         setUpMedButtons();
-        JPanel reportBlock = new JPanel(new GridLayout(0, 1));
-        reportBlock.setSize(WIDTH - (WIDTH / 5),HEIGHT - (HEIGHT / 5));
+        JPanel reportBlock = new JPanel(new GridLayout(2, 1));
+        reportBlock.setSize(WIDTH,HEIGHT);
         reportMessage = new JLabel("");
-        reportPane = new JScrollPane(new JTextArea(6, 40));
-        reportText = new JTextArea("", 6, 40);
+        reportPane = new JScrollPane(new JTextArea(2, 0));
+        reportText = new JTextArea("", 2, 0);
         reportText.setVisible(true);
 
         reportBlock.add(reportMessage);

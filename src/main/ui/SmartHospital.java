@@ -17,12 +17,12 @@ import java.util.LinkedList;
 //            six different tabs to modify/view these databases
 public class SmartHospital extends JFrame {
     public static final int homeTabIndex = 0;
-    public static final int settingsTabIndex = 1;
-    public static final int staffTabIndex = 2;
-    public static final int medicationTabIndex = 3;
-    public static final int patientTabIndex = 4;
-    public static final int patientModifierTabIndex = 5;
-    public static final int medicationModifierTabIndex = 6;
+    public static final int settingsTabIndex = 1;           //index issue, Index 1 out of bounds for length 1
+    public static final int staffTabIndex = 2;              //index issue, Index 2 out of bounds for length 2
+    public static final int medicationTabIndex = 3;         //index issue, Index 3 out of bounds for length 3
+    public static final int patientTabIndex = 4;            //index issue, Index 4 out of bounds for length 4
+    public static final int patientModifierTabIndex = 5;    //index issue, Index 5 out of bounds for length 5
+    public static final int medicationModifierTabIndex = 6; //index issue, Index 6 out of bounds for length 6
 
     private static final String JSON_STORE = "./data/hospital.json";
     private JsonWriter jsonWriter;
@@ -61,6 +61,7 @@ public class SmartHospital extends JFrame {
         jsonReader = new JsonReader(JSON_STORE);
         this.hospital = new Hospital();
         init();
+        EventLog.getInstance().clear();
         loadTabs();
         printToConsole();
     }
@@ -105,8 +106,8 @@ public class SmartHospital extends JFrame {
     }
 
     //MODIFIES: this, sidebar
-    //EFFECTS: adds home tab, settings tab and report tabs to this UI
-    private void loadTabs() {
+    //EFFECTS: adds home tab, settings tab, report tabs and modifier to this UI
+    private void loadTabs() throws ArrayIndexOutOfBoundsException {
         JPanel homeTab = new HomeTab(this);
         JPanel settingsTab = new SettingsTab(this);
         JPanel staffTab = new ReportTabStaff(this);
@@ -115,25 +116,25 @@ public class SmartHospital extends JFrame {
         JPanel patRemoveTab = new PatientModifierTab(this);
         JPanel medRemoveTab = new MedicationModifierTab(this);
 
-        sidebar.add(homeTab, homeTabIndex);
+        sidebar.add(homeTab, 0);
         sidebar.setTitleAt(homeTabIndex, "Greetings");
 
-        sidebar.add(settingsTab, settingsTabIndex);
+        sidebar.add(settingsTab, 1);
         sidebar.setTitleAt(settingsTabIndex, "Main Menu");
 
-        sidebar.add(staffTab, staffTabIndex);
+        sidebar.add(staffTab, 2);
         sidebar.setTitleAt(staffTabIndex, "Staff Menu");
 
-        sidebar.add(medTab, medicationTabIndex);
+        sidebar.add(medTab, 3);
         sidebar.setTitleAt(medicationTabIndex, "Medication Menu");
 
-        sidebar.add(patTab, patientTabIndex);
+        sidebar.add(patTab, 4);
         sidebar.setTitleAt(patientTabIndex, "Patients Menu");
 
-        sidebar.add(patRemoveTab, patientModifierTabIndex);
+        sidebar.add(patRemoveTab, 5);
         sidebar.setTitleAt(patientModifierTabIndex, "Patient List Modifier");
 
-        sidebar.add(medRemoveTab, medicationModifierTabIndex);
+        sidebar.add(medRemoveTab, 6);
         sidebar.setTitleAt(medicationModifierTabIndex, "Medication List Modifier");
     }
 

@@ -44,7 +44,7 @@ public class MedicationModifierTab extends Tab {
     //         database with a text areas input info change the medication database
     public MedicationModifierTab(SmartHospital controller) {
         super(controller);
-        setLayout(new GridLayout(8, 8));
+        setLayout(new GridLayout(8, 1));
         setIntro();
         setMedNameArea();
         setSerialNumArea();
@@ -57,7 +57,6 @@ public class MedicationModifierTab extends Tab {
     //EFFECTS: sets up the into at the top of the page for user direction
     public void setIntro() {
         reportBlockTitle = new JPanel(new GridLayout(1, 1));
-        reportBlockPatient = new JPanel(new GridLayout(1, 1));
         pageTitle = new JLabel(messageOne + " " + messageTwo);
         reportBlockTitle.add(pageTitle);
         add(reportBlockTitle);
@@ -92,7 +91,7 @@ public class MedicationModifierTab extends Tab {
     //MODIFIES: this, reportTextName, reportBlockName
     //EFFECTS: sets up a text area along with a text label for medication name for user input
     public void setMedNameArea() {
-        reportBlockName = new JPanel(new GridLayout(2, 4));
+        reportBlockName = new JPanel(new GridLayout(2, 1));
         reportBlockName.setSize(WIDTH, HEIGHT);
         medicationName = new JLabel("Medication Name");
         reportTextName = new JTextField();
@@ -105,7 +104,7 @@ public class MedicationModifierTab extends Tab {
     //MODIFIES: this, reportTextSerialNum, reportBlockSerialNum
     //EFFECTS: sets up a text area along with a text label for medication serial number for user input
     public void setSerialNumArea() {
-        reportBlockSerialNum = new JPanel(new GridLayout(2, 3));
+        reportBlockSerialNum = new JPanel(new GridLayout(2, 1));
         reportBlockSerialNum.setSize(WIDTH, HEIGHT);
         medicationSerialNum = new JLabel("Medication Serial Number");
         reportTextSerialNum = new JTextField();
@@ -118,7 +117,7 @@ public class MedicationModifierTab extends Tab {
     //MODIFIES: this, reportTextBrand, reportBlockBrand
     //EFFECTS: sets up a text area along with a text label for medication brand name for user input
     public void setMedBrandArea() {
-        reportBlockBrand = new JPanel(new GridLayout(2, 2));
+        reportBlockBrand = new JPanel(new GridLayout(2, 1));
         reportBlockBrand.setSize(WIDTH, HEIGHT);
         medicationBrandArea = new JLabel("Medication Brand Name");
         reportTextBrand = new JTextField();
@@ -131,13 +130,12 @@ public class MedicationModifierTab extends Tab {
     //MODIFIES: this, reportText, reportBlock
     //EFFECTS: create a panel to view the updated database and adds functionality for it
     public void setUpViewArea() {
-        JPanel reportBlock = new JPanel(new GridLayout(0, 1));
-        reportBlock.setSize(WIDTH - (WIDTH / 5),HEIGHT - (HEIGHT / 5));
+        JPanel reportBlock = new JPanel(new GridLayout(2, 1));
+        reportBlock.setSize(WIDTH,HEIGHT);
         reportMessage = new JLabel("");
-        reportPane = new JScrollPane(new JTextArea(6, 40));
-        reportText = new JTextArea("", 6, 40);
+        reportPane = new JScrollPane(new JTextArea(2, 1));
+        reportText = new JTextArea("", 2, 1);
         reportText.setVisible(true);
-
         reportBlock.add(reportMessage);
         reportBlock.add(reportPane);
         add(reportBlock);

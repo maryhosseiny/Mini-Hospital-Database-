@@ -152,7 +152,7 @@ public class Hospital implements Writable {
     // EFFECTS: removes a medication to the list of medications
     public void removeMedication(Medication medication) {
         medications.remove(medication);
-        EventLog.getInstance().logEvent(new Event("Inputted physician removed."));
+        EventLog.getInstance().logEvent(new Event("Inputted medication removed."));
     }
 
     // getters

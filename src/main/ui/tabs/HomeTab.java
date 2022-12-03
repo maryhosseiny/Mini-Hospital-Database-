@@ -24,7 +24,7 @@ public class HomeTab extends Tab {
     //EFFECTS: constructs a home tab for console with buttons and a greeting
     public HomeTab(SmartHospital controller) {
         super(controller);
-        setLayout(new GridLayout(9, 1));
+        setLayout(new GridLayout(9, 9));
         setGreetings();
         setThisIsFineImage();
         setProceedButton();

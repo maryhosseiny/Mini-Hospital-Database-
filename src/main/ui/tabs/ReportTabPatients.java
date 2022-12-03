@@ -24,12 +24,12 @@ public class ReportTabPatients extends Tab {
     public ReportTabPatients(SmartHospital controller) {
         super(controller);
         setButtons();
-        setLayout(new GridLayout(7, 1));
-        JPanel reportBlock = new JPanel(new GridLayout(0, 1));
+        setLayout(new GridLayout(8, 7));
+        JPanel reportBlock = new JPanel(new GridLayout(3, 1));
         reportBlock.setSize(WIDTH - (WIDTH / 5),HEIGHT - (HEIGHT / 5));
         reportMessage = new JLabel("");
-        reportPane = new JScrollPane(new JTextArea(6, 40));
-        reportText = new JTextArea("", 6, 40);
+        reportPane = new JScrollPane(new JTextArea(6, 6));
+        reportText = new JTextArea("", 6, 6);
         reportText.setVisible(true);
 
         reportBlock.add(reportMessage);

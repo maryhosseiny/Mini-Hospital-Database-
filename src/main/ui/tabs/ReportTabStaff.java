@@ -24,7 +24,7 @@ public class ReportTabStaff extends Tab {
     //         to the settings tab
     public ReportTabStaff(SmartHospital controller) {
         super(controller);
-        setLayout(new GridLayout(7, 1));
+        setLayout(new GridLayout(5, 1));
         setButtons();
         setViewArea();
 
@@ -49,13 +49,11 @@ public class ReportTabStaff extends Tab {
     //EFFECTS: create a panel to view the nurses and physicians database
     public void setViewArea() {
         JPanel reportBlock = new JPanel(new GridLayout(2, 1));
-        reportBlock.setSize(controller.WIDTH - (controller.WIDTH / 5),
-                controller.HEIGHT - (controller.HEIGHT / 5));
+        reportBlock.setSize(WIDTH,HEIGHT);
         reportMessage = new JLabel("");
-        reportPane = new JScrollPane(new JTextArea(6, 40));
-        reportText = new JTextArea("", 6, 40);
+        reportPane = new JScrollPane(new JTextArea(3, 1));
+        reportText = new JTextArea("", 3, 1);
         reportText.setVisible(true);
-
         reportBlock.add(reportMessage);
         reportBlock.add(reportPane);
         add(reportBlock);

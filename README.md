@@ -57,3 +57,25 @@ provided in modifier tabs where a change in the system occurs. You can find thos
  tabs located on the left side on the sidebar.
 - You can reload the state of my application by clicking the load button provided
 in the main menu tab on the sidebar.
+
+## Phase 4: Task 2
+Below you will see an example of event logging in the project. After initializing the 
+hospital and adding all the databases in place (this includes the addition of staff, 
+medication and patients to the hospital), the event log is cleared. This is 
+so that the user will have an easier time tracking the changes they have made to the 
+system. Hence, the example below will first have a date along with a time followed by an
+"Event log cleared." After which any changes made by the user 
+to the database is logged then displayed once the program closes. This can be seen in 
+the third and forth line of the example, where time and date are shown and are followed 
+by the "New patient added."
+
+### Example Event Logging: 
+
+Fri Dec 02 19:18:56 PST 2022
+
+Event log cleared.
+
+Fri Dec 02 19:19:09 PST 2022
+
+New patient added.
+
