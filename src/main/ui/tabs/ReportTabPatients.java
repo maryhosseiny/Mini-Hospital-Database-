@@ -83,7 +83,7 @@ public class ReportTabPatients extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Return")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.settingsTabIndex);
+                    getController().getTabbedPane().setSelectedIndex(1);
                 }
             }
         });
@@ -115,7 +115,7 @@ public class ReportTabPatients extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Remove Patient")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.patientModifierTabIndex);
+                    getController().getTabbedPane().setSelectedIndex(5);
                 }
             }
         });
@@ -129,7 +129,7 @@ public class ReportTabPatients extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Add Patient")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.patientModifierTabIndex);
+                    getController().getTabbedPane().setSelectedIndex(5);
                 }
             }
         });

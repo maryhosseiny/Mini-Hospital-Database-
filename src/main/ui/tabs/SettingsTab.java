@@ -52,7 +52,7 @@ public class SettingsTab extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Patient Database")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.patientTabIndex);
+                    getController().getTabbedPane().setSelectedIndex(4);
                 }
             }
         });
@@ -66,7 +66,7 @@ public class SettingsTab extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Medication Database")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.medicationTabIndex);
+                    getController().getTabbedPane().setSelectedIndex(3);
                 }
             }
         });
@@ -80,7 +80,7 @@ public class SettingsTab extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Staff Database")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.staffTabIndex);
+                    getController().getTabbedPane().setSelectedIndex(2);
                 }
             }
         });

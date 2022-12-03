@@ -69,7 +69,7 @@ public class HomeTab extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("If you have read the above, click this button to proceed")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.settingsTabIndex);
+                    getController().getTabbedPane().setSelectedIndex(1);
                 }
             }
         });

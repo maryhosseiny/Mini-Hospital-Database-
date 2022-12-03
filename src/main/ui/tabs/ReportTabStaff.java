@@ -115,7 +115,7 @@ public class ReportTabStaff extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Return")) {
-                    getController().getTabbedPane().setSelectedIndex(SmartHospital.settingsTabIndex);
+                    getController().getTabbedPane().setSelectedIndex(1);
                 }
             }
         });
